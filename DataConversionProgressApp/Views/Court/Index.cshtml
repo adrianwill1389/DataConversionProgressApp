@@ -1,37 +1,35 @@
 ﻿@model List<DataConversionProgressApp.Models.CourtProgress>
 
-@{
-    ViewData["Title"] = "Court Progress Table";
-}
-
-<h2>Court Tracking Table</h2>
-
-<table class="table table-bordered table-dark">
-    <thead>
-        <tr>
-            <th>Day Court Received / Collected</th>
-            <th>Court 1 Disposed</th>
-            <th>Court 1 Warrant</th>
-            <th>Court 2 CaseManagement</th>
-            <th>Court 2 Warrant</th>
-            <th>Progress</th>
-            <th>Status</th>
-            <th>Selected By</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<form method="post" asp-action="Save">
+    <table class="table table-bordered table-dark">
+        <thead>
             <tr>
-                <td>@item.DateReceived.ToString("dddd, MMM d, yyyy")</td>
-                <td><input type="checkbox" checked="@item.Court1Disposed" disabled /></td>
-                <td><input type="checkbox" checked="@item.Court1Warrant" disabled /></td>
-                <td><input type="checkbox" checked="@item.Court2Disposed" disabled /></td>
-                <td><input type="checkbox" checked="@item.Court2Warrant" disabled /></td>
-                <td>@item.Progress %</td>
-                <td>@item.Status</td>
-                <td>@item.User</td>
+                <th>Date</th>
+                <th>Court 1 Disposed</th>
+                <th>Court 1 Warrant</th>
+                <th>Court 2 CaseManagement</th>
+                <th>Court 2 Warrant</th>
+                <th>Progress</th>
+                <th>Status</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Model[i].DateReceived.ToString("dddd, MMM dd")
+                        <input type="hidden" asp-for="@Model[i].DateReceived" />
+                    </td>
+                    <td><input asp-for="@Model[i].Court1Disposed" type="checkbox" /></td>
+                    <td><input asp-for="@Model[i].Court1Warrant" type="checkbox" /></td>
+                    <td><input asp-for="@Model[i].Court2Disposed" type="checkbox" /></td>
+                    <td><input asp-for="@Model[i].Court2Warrant" type="checkbox" /></td>
+                    <td>@Model[i].Progress %</td>
+                    <td>@Model[i].Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

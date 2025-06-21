@@ -2,8 +2,6 @@
 {
     public class CourtProgress
     {
-        internal bool Court2CaseManagement;
-
         public DateTime DateReceived { get; set; }
         public bool Court1Disposed { get; set; }
         public bool Court1Warrant { get; set; }
@@ -19,12 +17,11 @@
                 if (Court1Warrant) count++;
                 if (Court2Disposed) count++;
                 if (Court2Warrant) count++;
-                return (int)(count / 4.0 * 100);
+                return count * 25; // Each box = 25%
             }
         }
 
         public string Status => Progress == 100 ? "Completed" : "In Progress";
-        public string User { get; set; }  // Who checked it
     }
 
 }

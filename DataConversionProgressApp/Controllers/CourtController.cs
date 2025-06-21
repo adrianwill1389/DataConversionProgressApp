@@ -1,20 +1,59 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DataConversionProgressApp.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataConversionProgressApp.Models;
 
 public class CourtController : Controller
 {
+    // 👇 This method runs first when you open the page
     public IActionResult Index()
     {
-        var sampleList = new List<CourtProgress>
+        var dates = GetWorkingDays(new DateTime(2025, 5, 1), new DateTime(2025, 5, 31));
+
+        var sampleList = dates.Select(date => new CourtProgress
         {
-            new CourtProgress { DateReceived = new DateTime(2025,5,1), Court1Disposed = true, Court1Warrant = true, Court2CaseManagement = true, Court2Warrant = true, User = "Admin" },
-            new CourtProgress { DateReceived = new DateTime(2025,5,2), Court1Disposed = true, Court1Warrant = true, Court2CaseManagement = true, Court2Warrant = true, User = "Clerk1" },
-            new CourtProgress { DateReceived = new DateTime(2025,5,5), Court1Disposed = true, Court1Warrant = true, Court2CaseManagement = true, Court2Warrant = false, User = "Clerk2" },
-            // Add more entries like your Excel
-        };
+            DateReceived = date
+        }).ToList();
 
         return View(sampleList);
+    }
+
+    // 👇 This runs when you press the Save button on the page
+    [HttpPost]
+    public IActionResult Save(List<CourtProgress> model)
+    {
+        // Later we’ll save this to a real database
+        return View("Index", model);
+    }
+
+    // 👇 THIS is where you paste the GetWorkingDays method (exactly as you wrote it)
+    private List<DateTime> GetWorkingDays(DateTime start, DateTime end)
+    {
+        var holidays = new List<DateTime>
+        {
+            new DateTime(2025, 1, 1),  // New Year's Day
+            new DateTime(2025, 4, 18), // Good Friday
+            new DateTime(2025, 4, 21), // Easter Monday
+            new DateTime(2025, 5, 23), // Labour Day
+            new DateTime(2025, 8, 1),  // Emancipation Day
+            new DateTime(2025, 8, 6),  // Independence Day
+            new DateTime(2025, 10, 21), // Heroes Day
+            new DateTime(2025, 12, 25), // Christmas
+            new DateTime(2025, 12, 26), // Boxing Day
+        };
+
+        var dates = new List<DateTime>();
+        for (var dt = start; dt <= end; dt = dt.AddDays(1))
+        {
+            if (dt.DayOfWeek != DayOfWeek.Saturday &&
+                dt.DayOfWeek != DayOfWeek.Sunday &&
+                !holidays.Contains(dt))
+            {
+                dates.Add(dt);
+            }
+        }
+        return dates;
     }
 }
