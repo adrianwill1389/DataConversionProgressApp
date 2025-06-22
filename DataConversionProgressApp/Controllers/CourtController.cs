@@ -8,17 +8,29 @@ using DataConversionProgressApp.Models;
 public class CourtController : Controller
 {
     // 👇 This method runs first when you open the page
-    public IActionResult Index()
+    public IActionResult Index(int? month, int? year)
     {
-        var dates = GetWorkingDays(new DateTime(2025, 5, 1), new DateTime(2025, 5, 31));
+        var currentDate = DateTime.Now;
 
-        var sampleList = dates.Select(date => new CourtProgress
+        int selectedMonth = month ?? currentDate.Month;
+        int selectedYear = year ?? currentDate.Year;
+
+        var startDate = new DateTime(selectedYear, selectedMonth, 1);
+        var endDate = startDate.AddMonths(1).AddDays(-1);
+
+        var dates = GetWorkingDays(startDate, endDate);
+
+        var model = dates.Select(date => new CourtProgress
         {
             DateReceived = date
         }).ToList();
 
-        return View(sampleList);
+        ViewBag.SelectedMonth = selectedMonth;
+        ViewBag.SelectedYear = selectedYear;
+
+        return View(model);
     }
+
 
     // 👇 This runs when you press the Save button on the page
     [HttpPost]

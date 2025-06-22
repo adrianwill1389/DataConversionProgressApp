@@ -1,6 +1,40 @@
 ﻿@model List<DataConversionProgressApp.Models.CourtProgress>
 
+
+<form method="get" asp-action="Index" id="dateForm">
+    <div class="form-group text-center mb-4">
+        <h4 class="text-info">Select Dates</h4>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-white">Select Month:</label>
+        <div class="col-sm-4">
+            <select name="month" class="form-control" onchange="document.getElementById('dateForm').submit();">
+                @for (int m = 1; m <= 12; m++)
+                {
+                    var monthName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m);
+                    if (m == ViewBag.SelectedMonth)
+                    {
+                        <option value="@m" selected>@monthName</option>
+                    }
+                    else
+                    {
+                        <option value="@m">@monthName</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <label class="col-sm-2 col-form-label text-white">Year:</label>
+        <div class="col-sm-4">
+            <input name="year" type="number" class="form-control"
+                   value="@ViewBag.SelectedYear" onchange="document.getElementById('dateForm').submit();" />
+        </div>
+    </div>
+</form>
+
 <form method="post" asp-action="Save">
+
     <table class="table table-bordered table-dark">
         <thead>
             <tr>
