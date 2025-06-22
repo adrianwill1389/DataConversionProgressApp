@@ -17,11 +17,19 @@
                 if (Court1Warrant) count++;
                 if (Court2Disposed) count++;
                 if (Court2Warrant) count++;
-                return count * 25; // Each box = 25%
+                return count * 25;
             }
         }
 
-        public string Status => Progress == 100 ? "Completed" : "In Progress";
+        public string Status
+        {
+            get
+            {
+                if (Progress == 0) return ""; // Show blank if nothing ticked
+                if (Progress == 100) return "Completed";
+                return "In Progress";
+            }
+        }
     }
 
 }
