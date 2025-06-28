@@ -29,6 +29,15 @@ namespace DataConversionProgressApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [HttpPost]
+        public IActionResult Save(List<CourtProgress> model)
+        {
+            // Simulate saving the data (e.g., update DB or log it)
+
+            TempData["SaveMessage"] = "Saved successfully!";
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

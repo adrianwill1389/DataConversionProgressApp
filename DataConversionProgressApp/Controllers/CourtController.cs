@@ -8,7 +8,7 @@ using DataConversionProgressApp.Models;
 public class CourtController : Controller
 {
     // 👇 This method runs first when you open the page
-    public IActionResult Index(int? month, int? year)
+    public IActionResult Index(string courtType = "Day", int? month = null, int? year = null)
     {
         var currentDate = DateTime.Now;
 
@@ -25,8 +25,10 @@ public class CourtController : Controller
             DateReceived = date
         }).ToList();
 
+        // Send dropdown values to the View
         ViewBag.SelectedMonth = selectedMonth;
         ViewBag.SelectedYear = selectedYear;
+        ViewBag.CourtType = courtType;
 
         return View(model);
     }
@@ -34,11 +36,12 @@ public class CourtController : Controller
 
     // 👇 This runs when you press the Save button on the page
     [HttpPost]
-    public IActionResult Save(List<CourtProgress> model)
+    public IActionResult Save(List<CourtProgress> model, string courtType, int month, int year)
     {
-        // Later we’ll save this to a real database
-        return View("Index", model);
+        TempData["SaveMessage"] = "✔ Saved Successfully!";
+        return RedirectToAction("Index", new { courtType = courtType, month = month, year = year });
     }
+
 
     // 👇 THIS is where you paste the GetWorkingDays method (exactly as you wrote it)
     private List<DateTime> GetWorkingDays(DateTime start, DateTime end)

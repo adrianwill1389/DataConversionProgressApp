@@ -8,6 +8,11 @@
         public bool Court2Disposed { get; set; }
         public bool Court2Warrant { get; set; }
 
+        public bool Court1Night { get; set; }
+        public bool Court2Night { get; set; }
+        public bool Court3Night { get; set; }
+
+
         public int Progress
         {
             get
