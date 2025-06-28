@@ -49,6 +49,13 @@
                     @TempData["SuccessMessage"]
                 </div>
             }
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger text-center">
+                    @Html.ValidationSummary(false)
+                </div>
+            }
+
 
             <form method="post" asp-action="Login">
                 <div class="mb-3">

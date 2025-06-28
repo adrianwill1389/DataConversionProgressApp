@@ -25,7 +25,7 @@ public class AccountController : Controller
             return RedirectToAction("Index", "Home");
         }
 
-        ViewBag.Error = "Invalid login.";
+        ModelState.AddModelError(string.Empty, "Incorrect username or password. Please try again.");
         return View(model);
     }
 
