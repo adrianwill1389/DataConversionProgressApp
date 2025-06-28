@@ -8,8 +8,14 @@ using DataConversionProgressApp.Models;
 public class CourtController : Controller
 {
     // 👇 This method runs first when you open the page
-    public IActionResult Index(string courtType = "Day", int? month = null, int? year = null)
+public IActionResult Index(string courtType = "Day", int? month = null, int? year = null)
     {
+        var username = HttpContext.Session.GetString("Username");
+        if (string.IsNullOrEmpty(username))
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
         var currentDate = DateTime.Now;
 
         int selectedMonth = month ?? currentDate.Month;
@@ -32,7 +38,6 @@ public class CourtController : Controller
 
         return View(model);
     }
-
 
     // 👇 This runs when you press the Save button on the page
     [HttpPost]

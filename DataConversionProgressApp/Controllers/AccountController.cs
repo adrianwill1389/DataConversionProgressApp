@@ -22,7 +22,7 @@ public class AccountController : Controller
         if (user != null)
         {
             HttpContext.Session.SetString("Username", user.Username);
-            return RedirectToAction("Index", "Court");
+            return RedirectToAction("Index", "Home");
         }
 
         ViewBag.Error = "Invalid login.";

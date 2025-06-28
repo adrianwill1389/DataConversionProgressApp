@@ -16,11 +16,16 @@ namespace DataConversionProgressApp.Controllers
 
         public IActionResult Index()
         {
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var months = Enumerable.Range(1, 12)
                 .Select(m => CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m))
                 .ToList();
 
-            // Optionally: you can pass in progress flags for each month from your DB later
             ViewBag.Months = months;
             return View();
         }
