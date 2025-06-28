@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 using DataConversionProgressApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,8 +16,15 @@ namespace DataConversionProgressApp.Controllers
 
         public IActionResult Index()
         {
+            var months = Enumerable.Range(1, 12)
+                .Select(m => CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m))
+                .ToList();
+
+            // Optionally: you can pass in progress flags for each month from your DB later
+            ViewBag.Months = months;
             return View();
         }
+
 
         public IActionResult Privacy()
         {
