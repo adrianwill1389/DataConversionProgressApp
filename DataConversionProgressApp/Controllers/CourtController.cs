@@ -34,10 +34,9 @@ public class CourtController : Controller
 
         var dates = GetWorkingDays(startDate, endDate);
 
-        var model = dates.Select(date => new CourtProgress
-        {
-            DateReceived = date
-        }).ToList();
+        var model = MergeSavedDataIntoModel(dates, courtType);
+
+
 
         // Send dropdown values to the View
         ViewBag.SelectedMonth = selectedMonth;
@@ -60,15 +59,34 @@ public class CourtController : Controller
                 DateReceived = item.DateReceived,
                 CourtType = courtType,
 
+                // Day court
                 Court1Disposed = item.Court1Disposed,
                 Court1DisposedBy = item.Court1Disposed ? username : null,
 
                 Court1Warrant = item.Court1Warrant,
                 Court1WarrantBy = item.Court1Warrant ? username : null,
 
+                Court2Disposed = item.Court2Disposed,
+                Court2DisposedBy = item.Court2Disposed ? username : null,
+
+                Court2Warrant = item.Court2Warrant,
+                Court2WarrantBy = item.Court2Warrant ? username : null,
+
+                // Night court
+                Court1Night = item.Court1Night,
+                Court1NightBy = item.Court1Night ? username : null,
+
+                Court2Night = item.Court2Night,
+                Court2NightBy = item.Court2Night ? username : null,
+
+                Court3Night = item.Court3Night,
+                Court3NightBy = item.Court3Night ? username : null,
+
                 UpdatedBy = username,
                 LastUpdated = DateTime.Now
             };
+
+
 
             _context.CourtProgressRecords.Add(record);
         }
@@ -110,4 +128,42 @@ public class CourtController : Controller
         }
         return dates;
     }
+    private List<CourtProgress> MergeSavedDataIntoModel(List<DateTime> dates, string courtType)
+    {
+        var saved = _context.CourtProgressRecords
+            .Where(r => r.CourtType == courtType && dates.Contains(r.DateReceived))
+            .ToList();
+
+        var model = dates.Select(date =>
+        {
+            var record = saved.FirstOrDefault(r => r.DateReceived == date);
+
+            return new CourtProgress
+            {
+                DateReceived = date,
+
+                // Day court
+                Court1Disposed = record?.Court1Disposed ?? false,
+                Court1DisposedBy = record?.Court1DisposedBy,
+                Court1Warrant = record?.Court1Warrant ?? false,
+                Court1WarrantBy = record?.Court1WarrantBy,
+                Court2Disposed = record?.Court2Disposed ?? false,
+                Court2DisposedBy = record?.Court2DisposedBy,
+                Court2Warrant = record?.Court2Warrant ?? false,
+                Court2WarrantBy = record?.Court2WarrantBy,
+
+                // Night court
+                Court1Night = record?.Court1Night ?? false,
+                Court1NightBy = record?.Court1NightBy,
+                Court2Night = record?.Court2Night ?? false,
+                Court2NightBy = record?.Court2NightBy,
+                Court3Night = record?.Court3Night ?? false,
+                Court3NightBy = record?.Court3NightBy
+            };
+        }).ToList();
+
+        return model;
+    }
+
+
 }

@@ -3,54 +3,70 @@ using DataConversionProgressApp.Models;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
-public class AccountController : Controller
+
+namespace DataConversionProgressApp.Controllers
 {
-    // Temporary in-memory user list
-    private static List<LoginViewModel> users = new List<LoginViewModel>
+    public class AccountController : Controller
     {
-        new LoginViewModel { Username = "kwhite", Password = "123" }
-    };
+        private readonly ApplicationDbContext _context;
 
-    [HttpGet]
-    public IActionResult Login() => View();
-
-    [HttpPost]
-    public IActionResult Login(LoginViewModel model)
-    {
-        var user = users.FirstOrDefault(u => u.Username == model.Username && u.Password == model.Password);
-        if (user != null)
+        public AccountController(ApplicationDbContext context)
         {
-            HttpContext.Session.SetString("Username", user.Username);
-            return RedirectToAction("Index", "Home");
+            _context = context;
         }
 
-        ModelState.AddModelError(string.Empty, "Incorrect username or password. Please try again.");
-        return View(model);
-    }
+        [HttpGet]
+        public IActionResult Login() => View();
 
-    [HttpGet]
-    public IActionResult Register() => View();
-
-    [HttpPost]
-    [HttpPost]
-    public IActionResult Register(LoginViewModel model)
-    {
-        if (!users.Any(u => u.Username == model.Username))
+        [HttpPost]
+        public IActionResult Login(LoginViewModel model)
         {
-            users.Add(model);
-            TempData["SuccessMessage"] = "🎉 Congratulations, you are now registered!";
+            var user = _context.UserAccounts
+                .FirstOrDefault(u => u.Username == model.Username && u.Password == model.Password);
+
+            if (user != null)
+            {
+                HttpContext.Session.SetString("Username", user.Username);
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError(string.Empty, "Incorrect username or password. Please try again.");
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Register() => View();
+
+        [HttpPost]
+        public IActionResult Register(LoginViewModel model)
+        {
+            var exists = _context.UserAccounts.Any(u => u.Username == model.Username);
+            if (!exists)
+            {
+                var user = new UserAccount
+                {
+                    Username = model.Username,
+                    Password = model.Password // 🔒 We'll add hashing next!
+                };
+                _context.UserAccounts.Add(user);
+                _context.SaveChanges();
+
+                TempData["SuccessMessage"] = "🎉 Congratulations, you are now registered!";
+                return RedirectToAction("Login");
+            }
+
+            ViewBag.Error = "Username already exists.";
+            return View(model);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
-
-        ViewBag.Error = "Username already exists.";
-        return View(model);
-    }
-
-
-    public IActionResult Logout()
-    {
-        HttpContext.Session.Clear();
-        return RedirectToAction("Login");
     }
 }
+
+

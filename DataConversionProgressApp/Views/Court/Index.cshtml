@@ -59,8 +59,6 @@
     </div>
 </form>
 
-
-
 <form method="get" asp-action="Index" id="dateForm">
     <input type="hidden" name="courtType" value="@ViewBag.CourtType" />
 
@@ -95,8 +93,6 @@
                 }
             </select>
 
-
-
         </div>
 
         <label class="col-sm-2 col-form-label text-white">Year:</label>
@@ -106,7 +102,6 @@
         </div>
     </div>
 </form>
-
 
 <form method="post" asp-action="Save">
     <input type="hidden" name="courtType" value="@ViewBag.CourtType" />
@@ -142,76 +137,77 @@
                 <th>Progress</th>
                 <th>Status</th>
             </tr>
-<tbody>
-    @for (int i = 0; i < Model.Count; i++)
-    {
-        <tr>
-            <td>
-                @Model[i].DateReceived.ToString("dddd, MMM d, yyyy")
-                <input type="hidden" asp-for="@Model[i].DateReceived" />
-            </td>
+        <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                <tr>
+                    <td>
+                        <input type="hidden" name="model.Index" value="@i" />
+                            @Model[i].DateReceived.ToString("dddd, MMM d, yyyy")
+                        <input type="hidden" asp-for="@Model[i].DateReceived" name="model[@i].DateReceived" />
+                    </td>
 
-            @if (ViewBag.CourtType == "Day")
-            {
-                <td>
-                    <input asp-for="@Model[i].Court1Disposed" type="checkbox" />
-                    @if (!string.IsNullOrEmpty(Model[i].Court1DisposedBy))
-                    {
-                        <div class="text-muted small">✓ <strong>@Model[i].Court1DisposedBy</strong></div>
-                    }
-                </td>
-                <td>
-                    <input asp-for="@Model[i].Court1Warrant" type="checkbox" />
-                    @if (!string.IsNullOrEmpty(Model[i].Court1WarrantBy))
-                    {
-                        <div class="text-muted small">✓ <strong>@Model[i].Court1WarrantBy</strong></div>
-                    }
-                </td>
-                <td>
-                    <input asp-for="@Model[i].Court2Disposed" type="checkbox" />
-                    @if (!string.IsNullOrEmpty(Model[i].Court2DisposedBy))
-                    {
-                        <div class="text-muted small">✓ <strong>@Model[i].Court2DisposedBy</strong></div>
-                    }
-                </td>
-                <td>
-                    <input asp-for="@Model[i].Court2Warrant" type="checkbox" />
-                    @if (!string.IsNullOrEmpty(Model[i].Court2WarrantBy))
-                    {
-                        <div class="text-muted small">✓ <strong>@Model[i].Court2WarrantBy</strong></div>
-                    }
-                </td>
-            }
-            else if (ViewBag.CourtType == "Night")
-            {
-                <td>
-                    <input asp-for="@Model[i].Court1Night" type="checkbox" />
-                    @if (!string.IsNullOrEmpty(Model[i].Court1NightBy))
-                    {
-                        <div class="text-muted small">✓ <strong>@Model[i].Court1NightBy</strong></div>
-                    }
-                </td>
-                <td>
-                    <input asp-for="@Model[i].Court2Night" type="checkbox" />
-                    @if (!string.IsNullOrEmpty(Model[i].Court2NightBy))
-                    {
-                        <div class="text-muted small">✓ <strong>@Model[i].Court2NightBy</strong></div>
-                    }
-                </td>
-                <td>
-                    <input asp-for="@Model[i].Court3Night" type="checkbox" />
-                    @if (!string.IsNullOrEmpty(Model[i].Court3NightBy))
-                    {
-                        <div class="text-muted small">✓ <strong>@Model[i].Court3NightBy</strong></div>
-                    }
-                </td>
-            }
+                        @if (ViewBag.CourtType == "Day")
+                        {
+                        <td>
+                            <input asp-for="@Model[i].Court1Disposed" name="model[@i].Court1Disposed" type="checkbox" />
+                                @if (!string.IsNullOrEmpty(Model[i].Court1DisposedBy))
+                                {
+                                <div class="text-muted small">✓ <strong>@Model[i].Court1DisposedBy</strong></div>
+                                }
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].Court1Warrant" name="model[@i].Court1Warrant" type="checkbox" />
+                                @if (!string.IsNullOrEmpty(Model[i].Court1WarrantBy))
+                                {
+                                <div class="text-muted small">✓ <strong>@Model[i].Court1WarrantBy</strong></div>
+                                }
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].Court2Disposed" name="model[@i].Court2Disposed" type="checkbox" />
+                                @if (!string.IsNullOrEmpty(Model[i].Court2DisposedBy))
+                                {
+                                <div class="text-muted small">✓ <strong>@Model[i].Court2DisposedBy</strong></div>
+                                }
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].Court2Warrant" name="model[@i].Court2Warrant" type="checkbox" />
+                                @if (!string.IsNullOrEmpty(Model[i].Court2WarrantBy))
+                                {
+                                <div class="text-muted small">✓ <strong>@Model[i].Court2WarrantBy</strong></div>
+                                }
+                        </td>
+                        }
+                        else if (ViewBag.CourtType == "Night")
+                        {
+                        <td>
+                            <input asp-for="@Model[i].Court1Night" name="model[@i].Court1Night" type="checkbox" />
+                                @if (!string.IsNullOrEmpty(Model[i].Court1NightBy))
+                                {
+                                <div class="text-muted small">✓ <strong>@Model[i].Court1NightBy</strong></div>
+                                }
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].Court2Night" name="model[@i].Court2Night" type="checkbox" />
+                                @if (!string.IsNullOrEmpty(Model[i].Court2NightBy))
+                                {
+                                <div class="text-muted small">✓ <strong>@Model[i].Court2NightBy</strong></div>
+                                }
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].Court3Night" name="model[@i].Court3Night" type="checkbox" />
+                                @if (!string.IsNullOrEmpty(Model[i].Court3NightBy))
+                                {
+                                <div class="text-muted small">✓ <strong>@Model[i].Court3NightBy</strong></div>
+                                }
+                        </td>
+                        }
 
                     <td>
                         <div class="progress" style="height: 20px;">
                             <div class="progress-bar bg-primary"
                                  role="progressbar"
-                                 style="width: @Model[i].Progress%;"
+                                 style="width: @(Model[i].Progress + "%")"
                                  aria-valuenow="@Model[i].Progress"
                                  aria-valuemin="0"
                                  aria-valuemax="100">
@@ -221,15 +217,18 @@
                     </td>
 
                     <td class="status-text">
-                            @(Model[i].Progress == 100 ? "Completed" : Model[i].Progress > 0 ? "In Progress" : "")
+                            @if (Model[i].Progress == 100)
+                            {
+                            <span class="text-success fw-bold">Completed</span>
+                            }
+                            else if (Model[i].Progress > 0)
+                            {
+                            <span class="text-warning fw-semibold">In Progress</span>
+                            }
                     </td>
-
-
-        </tr>
-    }
-</tbody>
-
-
+                </tr>
+                }
+        </tbody>
 
 
     </table>
