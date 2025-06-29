@@ -142,39 +142,94 @@
                 <th>Progress</th>
                 <th>Status</th>
             </tr>
-        <tbody>
-                @for (int i = 0; i < Model.Count; i++)
-                {
-                <tr>
-                    <td>
-                            @Model[i].DateReceived.ToString("dddd, MMM d, yyyy")
-                        <input type="hidden" asp-for="@Model[i].DateReceived" />
-                    </td>
+<tbody>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <tr>
+            <td>
+                @Model[i].DateReceived.ToString("dddd, MMM d, yyyy")
+                <input type="hidden" asp-for="@Model[i].DateReceived" />
+            </td>
 
-                        @if (ViewBag.CourtType == "Day")
-                        {
-                        <td><input asp-for="@Model[i].Court1Disposed" type="checkbox" /></td>
-                        <td><input asp-for="@Model[i].Court1Warrant" type="checkbox" /></td>
-                        <td><input asp-for="@Model[i].Court2Disposed" type="checkbox" /></td>
-                        <td><input asp-for="@Model[i].Court2Warrant" type="checkbox" /></td>
-                        }
-                        else if (ViewBag.CourtType == "Night")
-                        {
-                        <td><input asp-for="@Model[i].Court1Night" type="checkbox" /></td>
-                        <td><input asp-for="@Model[i].Court2Night" type="checkbox" /></td>
-                        <td><input asp-for="@Model[i].Court3Night" type="checkbox" /></td>
-                        }
+            @if (ViewBag.CourtType == "Day")
+            {
+                <td>
+                    <input asp-for="@Model[i].Court1Disposed" type="checkbox" />
+                    @if (!string.IsNullOrEmpty(Model[i].Court1DisposedBy))
+                    {
+                        <div class="text-muted small">✓ <strong>@Model[i].Court1DisposedBy</strong></div>
+                    }
+                </td>
+                <td>
+                    <input asp-for="@Model[i].Court1Warrant" type="checkbox" />
+                    @if (!string.IsNullOrEmpty(Model[i].Court1WarrantBy))
+                    {
+                        <div class="text-muted small">✓ <strong>@Model[i].Court1WarrantBy</strong></div>
+                    }
+                </td>
+                <td>
+                    <input asp-for="@Model[i].Court2Disposed" type="checkbox" />
+                    @if (!string.IsNullOrEmpty(Model[i].Court2DisposedBy))
+                    {
+                        <div class="text-muted small">✓ <strong>@Model[i].Court2DisposedBy</strong></div>
+                    }
+                </td>
+                <td>
+                    <input asp-for="@Model[i].Court2Warrant" type="checkbox" />
+                    @if (!string.IsNullOrEmpty(Model[i].Court2WarrantBy))
+                    {
+                        <div class="text-muted small">✓ <strong>@Model[i].Court2WarrantBy</strong></div>
+                    }
+                </td>
+            }
+            else if (ViewBag.CourtType == "Night")
+            {
+                <td>
+                    <input asp-for="@Model[i].Court1Night" type="checkbox" />
+                    @if (!string.IsNullOrEmpty(Model[i].Court1NightBy))
+                    {
+                        <div class="text-muted small">✓ <strong>@Model[i].Court1NightBy</strong></div>
+                    }
+                </td>
+                <td>
+                    <input asp-for="@Model[i].Court2Night" type="checkbox" />
+                    @if (!string.IsNullOrEmpty(Model[i].Court2NightBy))
+                    {
+                        <div class="text-muted small">✓ <strong>@Model[i].Court2NightBy</strong></div>
+                    }
+                </td>
+                <td>
+                    <input asp-for="@Model[i].Court3Night" type="checkbox" />
+                    @if (!string.IsNullOrEmpty(Model[i].Court3NightBy))
+                    {
+                        <div class="text-muted small">✓ <strong>@Model[i].Court3NightBy</strong></div>
+                    }
+                </td>
+            }
 
                     <td>
-                        <div class="progress" style="height: 20px; display: none;">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 0%;" aria-valuemin="0" aria-valuemax="100">0%</div>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar bg-primary"
+                                 role="progressbar"
+                                 style="width: @Model[i].Progress%;"
+                                 aria-valuenow="@Model[i].Progress"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                                    @Model[i].Progress%
+                            </div>
                         </div>
                     </td>
 
-                    <td class="status-text"></td>
-                </tr>
-                }
-        </tbody>
+                    <td class="status-text">
+                            @(Model[i].Progress == 100 ? "Completed" : Model[i].Progress > 0 ? "In Progress" : "")
+                    </td>
+
+
+        </tr>
+    }
+</tbody>
+
+
 
 
     </table>

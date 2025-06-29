@@ -7,9 +7,17 @@ using DataConversionProgressApp.Models;
 
 public class CourtController : Controller
 {
-    // 👇 This method runs first when you open the page
-public IActionResult Index(string courtType = "Day", int? month = null, int? year = null)
+    private readonly ApplicationDbContext _context;
+
+    public CourtController(ApplicationDbContext context)
     {
+        _context = context;
+    }
+
+    // 👇 This method runs first when you open the page
+    public IActionResult Index(string courtType = "Day", int? month = null, int? year = null)
+    {
+
         var username = HttpContext.Session.GetString("Username");
         if (string.IsNullOrEmpty(username))
         {
@@ -43,9 +51,35 @@ public IActionResult Index(string courtType = "Day", int? month = null, int? yea
     [HttpPost]
     public IActionResult Save(List<CourtProgress> model, string courtType, int month, int year)
     {
+        var username = HttpContext.Session.GetString("Username");
+
+        foreach (var item in model)
+        {
+            var record = new CourtProgressRecord
+            {
+                DateReceived = item.DateReceived,
+                CourtType = courtType,
+
+                Court1Disposed = item.Court1Disposed,
+                Court1DisposedBy = item.Court1Disposed ? username : null,
+
+                Court1Warrant = item.Court1Warrant,
+                Court1WarrantBy = item.Court1Warrant ? username : null,
+
+                UpdatedBy = username,
+                LastUpdated = DateTime.Now
+            };
+
+            _context.CourtProgressRecords.Add(record);
+        }
+
+        _context.SaveChanges();
+
         TempData["SaveMessage"] = "✔ Saved Successfully!";
         return RedirectToAction("Index", new { courtType = courtType, month = month, year = year });
     }
+
+
 
 
     // 👇 THIS is where you paste the GetWorkingDays method (exactly as you wrote it)
