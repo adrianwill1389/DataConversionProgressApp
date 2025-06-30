@@ -97,9 +97,6 @@ public class CourtController : Controller
         return RedirectToAction("Index", new { courtType = courtType, month = month, year = year });
     }
 
-
-
-
     // 👇 THIS is where you paste the GetWorkingDays method (exactly as you wrote it)
     private List<DateTime> GetWorkingDays(DateTime start, DateTime end)
     {
@@ -137,6 +134,10 @@ public class CourtController : Controller
         var model = dates.Select(date =>
         {
             var record = saved.FirstOrDefault(r => r.DateReceived == date);
+             if (record == null)
+    {
+        Console.WriteLine($"⚠️ No match for date: {date:yyyy-MM-dd} | CourtType: {courtType}");
+    }
 
             return new CourtProgress
             {

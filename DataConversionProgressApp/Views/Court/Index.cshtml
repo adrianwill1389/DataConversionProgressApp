@@ -150,6 +150,7 @@
                         @if (ViewBag.CourtType == "Day")
                         {
                         <td>
+                            <input type="hidden" name="model[@i].Court1Disposed" value="false" />
                             <input asp-for="@Model[i].Court1Disposed" name="model[@i].Court1Disposed" type="checkbox" />
                                 @if (!string.IsNullOrEmpty(Model[i].Court1DisposedBy))
                                 {
@@ -157,6 +158,7 @@
                                 }
                         </td>
                         <td>
+                            <input type="hidden" name="model[@i].Court1Warrant" value="false" />
                             <input asp-for="@Model[i].Court1Warrant" name="model[@i].Court1Warrant" type="checkbox" />
                                 @if (!string.IsNullOrEmpty(Model[i].Court1WarrantBy))
                                 {
@@ -164,6 +166,7 @@
                                 }
                         </td>
                         <td>
+                            <input type="hidden" name="model[@i].Court2Disposed" value="false" />
                             <input asp-for="@Model[i].Court2Disposed" name="model[@i].Court2Disposed" type="checkbox" />
                                 @if (!string.IsNullOrEmpty(Model[i].Court2DisposedBy))
                                 {
@@ -171,6 +174,7 @@
                                 }
                         </td>
                         <td>
+                            <input type="hidden" name="model[@i].Court2Warrant" value="false" />
                             <input asp-for="@Model[i].Court2Warrant" name="model[@i].Court2Warrant" type="checkbox" />
                                 @if (!string.IsNullOrEmpty(Model[i].Court2WarrantBy))
                                 {
@@ -181,6 +185,7 @@
                         else if (ViewBag.CourtType == "Night")
                         {
                         <td>
+                            <input type="hidden" name="model[@i].Court1Night" value="false" />
                             <input asp-for="@Model[i].Court1Night" name="model[@i].Court1Night" type="checkbox" />
                                 @if (!string.IsNullOrEmpty(Model[i].Court1NightBy))
                                 {
@@ -188,6 +193,7 @@
                                 }
                         </td>
                         <td>
+                            <input type="hidden" name="model[@i].Court2Night" value="false" />
                             <input asp-for="@Model[i].Court2Night" name="model[@i].Court2Night" type="checkbox" />
                                 @if (!string.IsNullOrEmpty(Model[i].Court2NightBy))
                                 {
@@ -195,6 +201,7 @@
                                 }
                         </td>
                         <td>
+                            <input type="hidden" name="model[@i].Court3Night" value="false" />
                             <input asp-for="@Model[i].Court3Night" name="model[@i].Court3Night" type="checkbox" />
                                 @if (!string.IsNullOrEmpty(Model[i].Court3NightBy))
                                 {
@@ -202,6 +209,8 @@
                                 }
                         </td>
                         }
+
+
 
                     <td>
                         <div class="progress" style="height: 20px;">
