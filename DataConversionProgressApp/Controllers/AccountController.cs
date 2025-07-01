@@ -23,18 +23,27 @@ namespace DataConversionProgressApp.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+
             var user = _context.UserAccounts
                 .FirstOrDefault(u => u.Username == model.Username && u.Password == model.Password);
 
             if (user != null)
             {
+                // ✅ Store username in session for use in Save method and UI
                 HttpContext.Session.SetString("Username", user.Username);
+
+                // Optional: you could also store user ID or role if needed
+                // HttpContext.Session.SetInt32("UserId", user.Id);
+
                 return RedirectToAction("Index", "Home");
             }
 
             ModelState.AddModelError(string.Empty, "Incorrect username or password. Please try again.");
             return View(model);
         }
+
 
         [HttpGet]
         public IActionResult Register() => View();

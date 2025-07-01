@@ -51,9 +51,9 @@ public class CourtController : Controller
     public IActionResult Save(List<CourtProgress> model, string courtType, int month, int year)
     {
         var username = HttpContext.Session.GetString("Username");
-
         foreach (var item in model)
         {
+
             var record = new CourtProgressRecord
             {
                 DateReceived = item.DateReceived,

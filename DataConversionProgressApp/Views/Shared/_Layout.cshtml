@@ -45,6 +45,9 @@
             @if (!string.IsNullOrEmpty(username))
             {
                 <div class="d-flex justify-content-end align-items-center pe-4">
+                    <span class="navbar-text fw-semibold text-primary me-3">
+                        Hello, @username
+                    </span>
                     <form asp-controller="Account" asp-action="Logout" method="post" class="mb-0">
                         <button type="submit" class="btn btn-outline-primary btn-sm">Logout</button>
                     </form>
