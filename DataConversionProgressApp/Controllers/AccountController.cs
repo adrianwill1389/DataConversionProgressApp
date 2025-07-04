@@ -34,7 +34,7 @@ namespace DataConversionProgressApp.Controllers
                 // ✅ Store username in session for use in Save method and UI
                 HttpContext.Session.SetString("Username", user.Username);
 
-                // Optional: you could also store user ID or role if needed
+                // Optional: could also store user ID or role if needed
                 // HttpContext.Session.SetInt32("UserId", user.Id);
 
                 return RedirectToAction("Index", "Home");
