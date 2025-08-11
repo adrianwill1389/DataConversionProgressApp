@@ -51,6 +51,10 @@ public class CourtController : Controller
     public IActionResult Save(List<CourtProgress> model, string courtType, int month, int year)
     {
         var username = HttpContext.Session.GetString("Username");
+        if (string.IsNullOrEmpty(username))
+        {
+            return RedirectToAction("Login", "Account");
+        }
 
         foreach (var item in model)
         {
@@ -59,6 +63,15 @@ public class CourtController : Controller
                                item.Court1Night || item.Court2Night || item.Court3Night;
 
             if (!hasProgress)
+                continue;
+
+            // ✅ Check if this user already saved for this date and courtType
+            bool alreadySaved = _context.CourtProgressRecords.Any(r =>
+                r.DateReceived == item.DateReceived &&
+                r.CourtType == courtType &&
+                r.UpdatedBy == username);
+
+            if (alreadySaved)
                 continue;
 
             var record = new CourtProgressRecord
@@ -140,11 +153,11 @@ public class CourtController : Controller
 
         foreach (var date in dates)
         {
-            var record = saved.FirstOrDefault(r => r.DateReceived == date && r.CourtType == courtType);
+            var recordsForDate = saved
+                .Where(r => r.DateReceived == date && r.CourtType == courtType)
+                .ToList();
 
-
-
-            if (record == null)
+            if (!recordsForDate.Any())
             {
                 Console.WriteLine($"⚠️ No match for date: {date:yyyy-MM-dd} | CourtType: {courtType}");
             }
@@ -155,22 +168,22 @@ public class CourtController : Controller
                 CourtType = courtType,
 
                 // Day court
-                Court1Disposed = record?.Court1Disposed ?? false,
-                Court1DisposedBy = record?.Court1DisposedBy,
-                Court1Warrant = record?.Court1Warrant ?? false,
-                Court1WarrantBy = record?.Court1WarrantBy,
-                Court2Disposed = record?.Court2Disposed ?? false,
-                Court2DisposedBy = record?.Court2DisposedBy,
-                Court2Warrant = record?.Court2Warrant ?? false,
-                Court2WarrantBy = record?.Court2WarrantBy,
+                Court1Disposed = recordsForDate.Any(r => r.Court1Disposed),
+                Court1DisposedBy = string.Join(", ", recordsForDate.Where(r => r.Court1Disposed && !string.IsNullOrEmpty(r.Court1DisposedBy)).Select(r => r.Court1DisposedBy).Distinct()),
+                Court1Warrant = recordsForDate.Any(r => r.Court1Warrant),
+                Court1WarrantBy = string.Join(", ", recordsForDate.Where(r => r.Court1Warrant && !string.IsNullOrEmpty(r.Court1WarrantBy)).Select(r => r.Court1WarrantBy).Distinct()),
+                Court2Disposed = recordsForDate.Any(r => r.Court2Disposed),
+                Court2DisposedBy = string.Join(", ", recordsForDate.Where(r => r.Court2Disposed && !string.IsNullOrEmpty(r.Court2DisposedBy)).Select(r => r.Court2DisposedBy).Distinct()),
+                Court2Warrant = recordsForDate.Any(r => r.Court2Warrant),
+                Court2WarrantBy = string.Join(", ", recordsForDate.Where(r => r.Court2Warrant && !string.IsNullOrEmpty(r.Court2WarrantBy)).Select(r => r.Court2WarrantBy).Distinct()),
 
                 // Night court
-                Court1Night = record?.Court1Night ?? false,
-                Court1NightBy = record?.Court1NightBy,
-                Court2Night = record?.Court2Night ?? false,
-                Court2NightBy = record?.Court2NightBy,
-                Court3Night = record?.Court3Night ?? false,
-                Court3NightBy = record?.Court3NightBy
+                Court1Night = recordsForDate.Any(r => r.Court1Night),
+                Court1NightBy = string.Join(", ", recordsForDate.Where(r => r.Court1Night && !string.IsNullOrEmpty(r.Court1NightBy)).Select(r => r.Court1NightBy).Distinct()),
+                Court2Night = recordsForDate.Any(r => r.Court2Night),
+                Court2NightBy = string.Join(", ", recordsForDate.Where(r => r.Court2Night && !string.IsNullOrEmpty(r.Court2NightBy)).Select(r => r.Court2NightBy).Distinct()),
+                Court3Night = recordsForDate.Any(r => r.Court3Night),
+                Court3NightBy = string.Join(", ", recordsForDate.Where(r => r.Court3Night && !string.IsNullOrEmpty(r.Court3NightBy)).Select(r => r.Court3NightBy).Distinct())
             };
 
             model.Add(item);
