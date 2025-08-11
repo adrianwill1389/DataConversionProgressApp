@@ -142,40 +142,39 @@
                 {
                 <tr>
                     <td>
-                        <input type="hidden" name="model.Index" value="@i" />
                             @Model[i].DateReceived.ToString("dddd, MMM d, yyyy")
-                        <input type="hidden" asp-for="@Model[i].DateReceived" name="model[@i].DateReceived" />
+                        <input type="hidden" name="model[i].DateReceived" value="@Model[i].DateReceived.ToString("yyyy-MM-dd")" />
                     </td>
 
                         @if (ViewBag.CourtType == "Day")
                         {
                         <td>
-                            <input type="hidden" name="model[@i].Court1Disposed" value="false" />
-                            <input asp-for="@Model[i].Court1Disposed" name="model[@i].Court1Disposed" type="checkbox" />
+                            <input type="hidden" name="model[i].Court1Disposed" value="false" />
+                            <input type="checkbox" name="model[i].Court1Disposed" value="true" @(Model[i].Court1Disposed ? "checked" : "") />
                                 @if (!string.IsNullOrEmpty(Model[i].Court1DisposedBy))
                                 {
                                 <div class="text-muted small">✓ <strong>@Model[i].Court1DisposedBy</strong></div>
                                 }
                         </td>
                         <td>
-                            <input type="hidden" name="model[@i].Court1Warrant" value="false" />
-                            <input asp-for="@Model[i].Court1Warrant" name="model[@i].Court1Warrant" type="checkbox" />
+                            <input type="hidden" name="model[i].Court1Warrant" value="false" />
+                            <input type="checkbox" name="model[i].Court1Warrant" value="true" @(Model[i].Court1Warrant ? "checked" : "") />
                                 @if (!string.IsNullOrEmpty(Model[i].Court1WarrantBy))
                                 {
                                 <div class="text-muted small">✓ <strong>@Model[i].Court1WarrantBy</strong></div>
                                 }
                         </td>
                         <td>
-                            <input type="hidden" name="model[@i].Court2Disposed" value="false" />
-                            <input asp-for="@Model[i].Court2Disposed" name="model[@i].Court2Disposed" type="checkbox" />
+                            <input type="hidden" name="model[i].Court2Disposed" value="false" />
+                            <input type="checkbox" name="model[i].Court2Disposed" value="true" @(Model[i].Court2Disposed ? "checked" : "") />
                                 @if (!string.IsNullOrEmpty(Model[i].Court2DisposedBy))
                                 {
                                 <div class="text-muted small">✓ <strong>@Model[i].Court2DisposedBy</strong></div>
                                 }
                         </td>
                         <td>
-                            <input type="hidden" name="model[@i].Court2Warrant" value="false" />
-                            <input asp-for="@Model[i].Court2Warrant" name="model[@i].Court2Warrant" type="checkbox" />
+                            <input type="hidden" name="model[i].Court2Warrant" value="false" />
+                            <input type="checkbox" name="model[i].Court2Warrant" value="true" @(Model[i].Court2Warrant ? "checked" : "") />
                                 @if (!string.IsNullOrEmpty(Model[i].Court2WarrantBy))
                                 {
                                 <div class="text-muted small">✓ <strong>@Model[i].Court2WarrantBy</strong></div>
@@ -185,32 +184,30 @@
                         else if (ViewBag.CourtType == "Night")
                         {
                         <td>
-                            <input type="hidden" name="model[@i].Court1Night" value="false" />
-                            <input asp-for="@Model[i].Court1Night" name="model[@i].Court1Night" type="checkbox" />
+                            <input type="hidden" name="model[i].Court1Night" value="false" />
+                            <input type="checkbox" name="model[i].Court1Night" value="true" @(Model[i].Court1Night ? "checked" : "") />
                                 @if (!string.IsNullOrEmpty(Model[i].Court1NightBy))
                                 {
                                 <div class="text-muted small">✓ <strong>@Model[i].Court1NightBy</strong></div>
                                 }
                         </td>
                         <td>
-                            <input type="hidden" name="model[@i].Court2Night" value="false" />
-                            <input asp-for="@Model[i].Court2Night" name="model[@i].Court2Night" type="checkbox" />
+                            <input type="hidden" name="model[i].Court2Night" value="false" />
+                            <input type="checkbox" name="model[i].Court2Night" value="true" @(Model[i].Court2Night ? "checked" : "") />
                                 @if (!string.IsNullOrEmpty(Model[i].Court2NightBy))
                                 {
                                 <div class="text-muted small">✓ <strong>@Model[i].Court2NightBy</strong></div>
                                 }
                         </td>
                         <td>
-                            <input type="hidden" name="model[@i].Court3Night" value="false" />
-                            <input asp-for="@Model[i].Court3Night" name="model[@i].Court3Night" type="checkbox" />
+                            <input type="hidden" name="model[i].Court3Night" value="false" />
+                            <input type="checkbox" name="model[i].Court3Night" value="true" @(Model[i].Court3Night ? "checked" : "") />
                                 @if (!string.IsNullOrEmpty(Model[i].Court3NightBy))
                                 {
                                 <div class="text-muted small">✓ <strong>@Model[i].Court3NightBy</strong></div>
                                 }
                         </td>
                         }
-
-
 
                     <td>
                         <div class="progress" style="height: 20px;">
@@ -237,12 +234,13 @@
                     </td>
                 </tr>
                 }
+
         </tbody>
 
 
     </table>
     <div class="d-flex justify-content-end mt-3">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-success" style="z-index:999; position:relative;">💾 Save</button>
     </div>
 
 </form>

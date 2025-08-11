@@ -51,15 +51,21 @@ public class CourtController : Controller
     public IActionResult Save(List<CourtProgress> model, string courtType, int month, int year)
     {
         var username = HttpContext.Session.GetString("Username");
+
         foreach (var item in model)
         {
+            bool hasProgress = item.Court1Disposed || item.Court1Warrant ||
+                               item.Court2Disposed || item.Court2Warrant ||
+                               item.Court1Night || item.Court2Night || item.Court3Night;
+
+            if (!hasProgress)
+                continue;
 
             var record = new CourtProgressRecord
             {
                 DateReceived = item.DateReceived,
                 CourtType = courtType,
 
-                // Day court
                 Court1Disposed = item.Court1Disposed,
                 Court1DisposedBy = item.Court1Disposed ? username : null,
 
@@ -72,7 +78,6 @@ public class CourtController : Controller
                 Court2Warrant = item.Court2Warrant,
                 Court2WarrantBy = item.Court2Warrant ? username : null,
 
-                // Night court
                 Court1Night = item.Court1Night,
                 Court1NightBy = item.Court1Night ? username : null,
 
@@ -86,8 +91,6 @@ public class CourtController : Controller
                 LastUpdated = DateTime.Now
             };
 
-
-
             _context.CourtProgressRecords.Add(record);
         }
 
@@ -96,6 +99,8 @@ public class CourtController : Controller
         TempData["SaveMessage"] = "✔ Saved Successfully!";
         return RedirectToAction("Index", new { courtType = courtType, month = month, year = year });
     }
+
+
 
     // 👇 THIS is where you paste the GetWorkingDays method (exactly as you wrote it)
     private List<DateTime> GetWorkingDays(DateTime start, DateTime end)
@@ -131,17 +136,23 @@ public class CourtController : Controller
             .Where(r => r.CourtType == courtType && dates.Contains(r.DateReceived))
             .ToList();
 
-        var model = dates.Select(date =>
-        {
-            var record = saved.FirstOrDefault(r => r.DateReceived == date);
-             if (record == null)
-    {
-        Console.WriteLine($"⚠️ No match for date: {date:yyyy-MM-dd} | CourtType: {courtType}");
-    }
+        var model = new List<CourtProgress>();
 
-            return new CourtProgress
+        foreach (var date in dates)
+        {
+            var record = saved.FirstOrDefault(r => r.DateReceived == date && r.CourtType == courtType);
+
+
+
+            if (record == null)
+            {
+                Console.WriteLine($"⚠️ No match for date: {date:yyyy-MM-dd} | CourtType: {courtType}");
+            }
+
+            var item = new CourtProgress
             {
                 DateReceived = date,
+                CourtType = courtType,
 
                 // Day court
                 Court1Disposed = record?.Court1Disposed ?? false,
@@ -161,10 +172,13 @@ public class CourtController : Controller
                 Court3Night = record?.Court3Night ?? false,
                 Court3NightBy = record?.Court3NightBy
             };
-        }).ToList();
+
+            model.Add(item);
+        }
 
         return model;
     }
+
 
 
 }
