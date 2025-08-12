@@ -3,6 +3,8 @@
     public class CourtProgress
     {
         public DateTime DateReceived { get; set; }
+        public string CourtType { get; set; }
+
         public bool Court1Disposed { get; set; }
         public string Court1DisposedBy { get; set; }
         public bool Court1Warrant { get; set; }
