@@ -3,168 +3,174 @@ using DataConversionProgressApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataConversionProgressApp.Models;
 
-public class CourtController : Controller
+namespace DataConversionProgressApp.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public CourtController(ApplicationDbContext context)
+    public class CourtController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    // 👇 This method runs first when you open the page
-    public IActionResult Index(string courtType = "Day", int? month = null, int? year = null)
-    {
-
-        var username = HttpContext.Session.GetString("Username");
-        if (string.IsNullOrEmpty(username))
+        public CourtController(ApplicationDbContext context)
         {
-            return RedirectToAction("Login", "Account");
+            _context = context;
         }
 
-        var currentDate = DateTime.Now;
-
-        int selectedMonth = month ?? currentDate.Month;
-        int selectedYear = year ?? currentDate.Year;
-
-        var startDate = new DateTime(selectedYear, selectedMonth, 1);
-        var endDate = startDate.AddMonths(1).AddDays(-1);
-
-        var dates = GetWorkingDays(startDate, endDate);
-
-        var model = MergeSavedDataIntoModel(dates, courtType);
-
-
-
-        // Send dropdown values to the View
-        ViewBag.SelectedMonth = selectedMonth;
-        ViewBag.SelectedYear = selectedYear;
-        ViewBag.CourtType = courtType;
-
-        return View(model);
-    }
-
-    // 👇 This runs when you press the Save button on the page
-    [HttpPost]
-    public IActionResult Save(List<CourtProgress> model, string courtType, int month, int year)
-    {
-        var username = HttpContext.Session.GetString("Username");
-        foreach (var item in model)
+     
+        public IActionResult Index(string courtType = "Day", int? month = null, int? year = null)
         {
-
-            var record = new CourtProgressRecord
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
             {
-                DateReceived = item.DateReceived,
-                CourtType = courtType,
-
-                // Day court
-                Court1Disposed = item.Court1Disposed,
-                Court1DisposedBy = item.Court1Disposed ? username : null,
-
-                Court1Warrant = item.Court1Warrant,
-                Court1WarrantBy = item.Court1Warrant ? username : null,
-
-                Court2Disposed = item.Court2Disposed,
-                Court2DisposedBy = item.Court2Disposed ? username : null,
-
-                Court2Warrant = item.Court2Warrant,
-                Court2WarrantBy = item.Court2Warrant ? username : null,
-
-                // Night court
-                Court1Night = item.Court1Night,
-                Court1NightBy = item.Court1Night ? username : null,
-
-                Court2Night = item.Court2Night,
-                Court2NightBy = item.Court2Night ? username : null,
-
-                Court3Night = item.Court3Night,
-                Court3NightBy = item.Court3Night ? username : null,
-
-                UpdatedBy = username,
-                LastUpdated = DateTime.Now
-            };
-
-
-
-            _context.CourtProgressRecords.Add(record);
-        }
-
-        _context.SaveChanges();
-
-        TempData["SaveMessage"] = "✔ Saved Successfully!";
-        return RedirectToAction("Index", new { courtType = courtType, month = month, year = year });
-    }
-
-    // 👇 THIS is where you paste the GetWorkingDays method (exactly as you wrote it)
-    private List<DateTime> GetWorkingDays(DateTime start, DateTime end)
-    {
-        var holidays = new List<DateTime>
-        {
-            new DateTime(2025, 1, 1),  // New Year's Day
-            new DateTime(2025, 4, 18), // Good Friday
-            new DateTime(2025, 4, 21), // Easter Monday
-            new DateTime(2025, 5, 23), // Labour Day
-            new DateTime(2025, 8, 1),  // Emancipation Day
-            new DateTime(2025, 8, 6),  // Independence Day
-            new DateTime(2025, 10, 21), // Heroes Day
-            new DateTime(2025, 12, 25), // Christmas
-            new DateTime(2025, 12, 26), // Boxing Day
-        };
-
-        var dates = new List<DateTime>();
-        for (var dt = start; dt <= end; dt = dt.AddDays(1))
-        {
-            if (dt.DayOfWeek != DayOfWeek.Saturday &&
-                dt.DayOfWeek != DayOfWeek.Sunday &&
-                !holidays.Contains(dt))
-            {
-                dates.Add(dt);
+                return RedirectToAction("Login", "Account");
             }
+
+            var currentDate = DateTime.Now;
+            int selectedMonth = month ?? currentDate.Month;
+            int selectedYear = year ?? currentDate.Year;
+
+            var startDate = new DateTime(selectedYear, selectedMonth, 1);
+            var endDate = startDate.AddMonths(1).AddDays(-1);
+
+            var dates = GetWorkingDays(startDate, endDate);
+
+            var model = MergeSavedDataIntoModel(dates, courtType);
+
+            ViewBag.SelectedMonth = selectedMonth;
+            ViewBag.SelectedYear = selectedYear;
+            ViewBag.CourtType = courtType;
+
+            return View(model);
         }
-        return dates;
-    }
-    private List<CourtProgress> MergeSavedDataIntoModel(List<DateTime> dates, string courtType)
-    {
-        var saved = _context.CourtProgressRecords
-            .Where(r => r.CourtType == courtType && dates.Contains(r.DateReceived))
-            .ToList();
 
-        var model = dates.Select(date =>
+        [HttpPost]
+        public IActionResult Save(List<CourtProgressRecord> model, string courtType, int month, int year)
         {
-            var record = saved.FirstOrDefault(r => r.DateReceived == date);
-             if (record == null)
-    {
-        Console.WriteLine($"⚠️ No match for date: {date:yyyy-MM-dd} | CourtType: {courtType}");
-    }
+            var username = HttpContext.Session.GetString("Username") ?? "System";
 
-            return new CourtProgress
+            foreach (var item in model)
             {
-                DateReceived = date,
+                var dateReceived = item.DateReceived != default ? item.DateReceived.Date : DateTime.Today;
 
-                // Day court
-                Court1Disposed = record?.Court1Disposed ?? false,
-                Court1DisposedBy = record?.Court1DisposedBy,
-                Court1Warrant = record?.Court1Warrant ?? false,
-                Court1WarrantBy = record?.Court1WarrantBy,
-                Court2Disposed = record?.Court2Disposed ?? false,
-                Court2DisposedBy = record?.Court2DisposedBy,
-                Court2Warrant = record?.Court2Warrant ?? false,
-                Court2WarrantBy = record?.Court2WarrantBy,
+                var existing = _context.CourtProgressRecords
+                    .FirstOrDefault(r => r.DateReceived.Date == dateReceived && r.CourtType == courtType);
 
-                // Night court
-                Court1Night = record?.Court1Night ?? false,
-                Court1NightBy = record?.Court1NightBy,
-                Court2Night = record?.Court2Night ?? false,
-                Court2NightBy = record?.Court2NightBy,
-                Court3Night = record?.Court3Night ?? false,
-                Court3NightBy = record?.Court3NightBy
+                if (existing == null)
+                {
+                    existing = new CourtProgressRecord
+                    {
+                        DateReceived = dateReceived,
+                        CourtType = courtType
+                    };
+                    _context.CourtProgressRecords.Add(existing);
+                }
+
+                
+                existing.Court1Disposed = item.Court1Disposed;
+                existing.Court1DisposedBy = item.Court1Disposed ? username : string.Empty;
+
+                existing.Court1Warrant = item.Court1Warrant;
+                existing.Court1WarrantBy = item.Court1Warrant ? username : string.Empty;
+
+                existing.Court2Disposed = item.Court2Disposed;
+                existing.Court2DisposedBy = item.Court2Disposed ? username : string.Empty;
+
+                existing.Court2Warrant = item.Court2Warrant;
+                existing.Court2WarrantBy = item.Court2Warrant ? username : string.Empty;
+
+                existing.Court1Night = item.Court1Night;
+                existing.Court1NightBy = item.Court1Night ? username : string.Empty;
+
+                existing.Court2Night = item.Court2Night;
+                existing.Court2NightBy = item.Court2Night ? username : string.Empty;
+
+                existing.Court3Night = item.Court3Night;
+                existing.Court3NightBy = item.Court3Night ? username : string.Empty;
+
+                existing.UpdatedBy = username;
+                existing.LastUpdated = DateTime.Now;
+            }
+
+            _context.SaveChanges();
+
+            TempData["SaveMessage"] = "✔ Saved Successfully!";
+            return RedirectToAction("Index", new { courtType, month, year });
+        }
+
+        // Return list of working days excluding weekends and holidays
+        private List<DateTime> GetWorkingDays(DateTime start, DateTime end)
+        {
+            var holidays = new List<DateTime>
+            {
+                new DateTime(start.Year, 1, 1),   
+                new DateTime(start.Year, 4, 18), 
+                new DateTime(start.Year, 4, 21),  
+                new DateTime(start.Year, 5, 23),  
+                new DateTime(start.Year, 8, 1),   
+                new DateTime(start.Year, 8, 6),   
+                new DateTime(start.Year, 10, 21),
+                new DateTime(start.Year, 12, 25), 
+                new DateTime(start.Year, 12, 26),
             };
-        }).ToList();
 
-        return model;
+            var dates = new List<DateTime>();
+            for (var dt = start; dt <= end; dt = dt.AddDays(1))
+            {
+                if (dt.DayOfWeek != DayOfWeek.Saturday &&
+                    dt.DayOfWeek != DayOfWeek.Sunday &&
+                    !holidays.Contains(dt))
+                {
+                    dates.Add(dt);
+                }
+            }
+            return dates;
+        }
+
+        // Merge saved DB data with all dates for display and editing
+        private List<CourtProgressRecord> MergeSavedDataIntoModel(List<DateTime> dates, string courtType)
+        {
+            var dateList = dates.Select(d => d.Date).ToList();
+
+            var saved = _context.CourtProgressRecords
+                .Where(r => r.CourtType == courtType && dateList.Contains(r.DateReceived.Date))
+                .ToList();
+
+            var model = dates.Select(date =>
+            {
+                var record = saved.FirstOrDefault(r => r.DateReceived.Date == date.Date);
+
+                return new CourtProgressRecord
+                {
+                    DateReceived = date,
+
+                    CourtType = courtType,
+
+                    Court1Disposed = record?.Court1Disposed ?? false,
+                    Court1DisposedBy = record?.Court1DisposedBy,
+
+                    Court1Warrant = record?.Court1Warrant ?? false,
+                    Court1WarrantBy = record?.Court1WarrantBy,
+
+                    Court2Disposed = record?.Court2Disposed ?? false,
+                    Court2DisposedBy = record?.Court2DisposedBy,
+
+                    Court2Warrant = record?.Court2Warrant ?? false,
+                    Court2WarrantBy = record?.Court2WarrantBy,
+
+                    Court1Night = record?.Court1Night ?? false,
+                    Court1NightBy = record?.Court1NightBy,
+
+                    Court2Night = record?.Court2Night ?? false,
+                    Court2NightBy = record?.Court2NightBy,
+
+                    Court3Night = record?.Court3Night ?? false,
+                    Court3NightBy = record?.Court3NightBy,
+
+                    UpdatedBy = record?.UpdatedBy,
+                    LastUpdated = record?.LastUpdated ?? DateTime.MinValue
+                };
+            }).ToList();
+
+            return model;
+        }
     }
-
-
 }
