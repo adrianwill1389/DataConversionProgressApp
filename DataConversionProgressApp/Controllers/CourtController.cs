@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DataConversionProgressApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
+//Did not implement the username tag on each checkbox yet
 
 namespace DataConversionProgressApp.Controllers
 {
