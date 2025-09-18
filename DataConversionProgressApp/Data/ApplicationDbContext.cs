@@ -8,6 +8,14 @@ public class ApplicationDbContext : DbContext
     public DbSet<CourtProgressRecord> CourtProgressRecords { get; set; }
     public DbSet<UserAccount> UserAccounts { get; set; }
 
+    public DbSet<Announcement> Announcements { get; set; }
+
+    public DbSet<TickedItem> TickedItems { get; set; }
+
+
+
+
+
 
 }
 

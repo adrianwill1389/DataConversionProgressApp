@@ -111,101 +111,151 @@
                 <th>Status</th>
             </tr>
         </thead>
-        <tbody>
-            @for (int i = 0; i < Model.Count; i++)
-            {
-                <tr>
-                    <td>
-                        <input type="hidden" name="model[@i].DateReceived" value="@Model[i].DateReceived.ToString("yyyy-MM-dd")" />
-                        @Model[i].DateReceived.ToString("dddd, MMM d, yyyy")
-                    </td>
+                <tbody>
+     @for (int i = 0; i < Model.Count; i++)
+     {
+         <tr>
+             <td>
+                 <input type="hidden" name="model[@i].DateReceived" value="@Model[i].DateReceived.ToString("yyyy-MM-dd")" />
+                 @Model[i].DateReceived.ToString("dddd, MMM d, yyyy")
+             </td>
 
-                    @if (ViewBag.CourtType == "Day")
-                    {
+             @if (ViewBag.CourtType == "Day")
+             {
                         <td>
                             <input type="checkbox" name="model[@i].Court1Disposed" value="true" @(Model[i].Court1Disposed ? "checked" : "") />
-
                             <input type="hidden" name="model[@i].Court1Disposed" value="false" />
+                            @if (!string.IsNullOrWhiteSpace(Model[i].Court1DisposedBy))
+                            {
+                                <div style="color: #0d6efd;" class="small"
+                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    ✓ <strong>@Model[i].Court1DisposedBy.Trim()</strong>
+                                </div>
+                            }
                         </td>
                         <td>
                             <input type="checkbox" name="model[@i].Court1Warrant" value="true" @(Model[i].Court1Warrant ? "checked" : "") />
-
                             <input type="hidden" name="model[@i].Court1Warrant" value="false" />
+                            @if (!string.IsNullOrWhiteSpace(Model[i].Court1WarrantBy))
+                            {
+                                <div style="color: #0d6efd;" class="small"
+                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    ✓ <strong>@Model[i].Court1WarrantBy.Trim()</strong>
+                                </div>
+                            }
                         </td>
                         <td>
                             <input type="checkbox" name="model[@i].Court2Disposed" value="true" @(Model[i].Court2Disposed ? "checked" : "") />
-
                             <input type="hidden" name="model[@i].Court2Disposed" value="false" />
+                            @if (!string.IsNullOrWhiteSpace(Model[i].Court2DisposedBy))
+                            {
+                                <div style="color: #0d6efd;" class="small"
+                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    ✓ <strong>@Model[i].Court2DisposedBy.Trim()</strong>
+                                </div>
+                            }
                         </td>
                         <td>
                             <input type="checkbox" name="model[@i].Court2Warrant" value="true" @(Model[i].Court2Warrant ? "checked" : "") />
-
                             <input type="hidden" name="model[@i].Court2Warrant" value="false" />
+                            @if (!string.IsNullOrWhiteSpace(Model[i].Court2WarrantBy))
+                            {
+                                <div style="color: #0d6efd;" class="small"
+                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    ✓ <strong>@Model[i].Court2WarrantBy.Trim()</strong>
+                                </div>
+                            }
                         </td>
-                    }
-                    else if (ViewBag.CourtType == "Night")
-                    {
+
+
+             }
+             else if (ViewBag.CourtType == "Night")
+             {
                         <td>
                             <input type="checkbox" name="model[@i].Court1Night" value="true" @(Model[i].Court1Night ? "checked" : "") />
-
                             <input type="hidden" name="model[@i].Court1Night" value="false" />
+                            @if (!string.IsNullOrWhiteSpace(Model[i].Court1NightBy))
+                            {
+                                <div style="color: #0d6efd;" class="small"
+                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    ✓ <strong>@Model[i].Court1NightBy.Trim()</strong>
+                                </div>
+                            }
                         </td>
                         <td>
                             <input type="checkbox" name="model[@i].Court2Night" value="true" @(Model[i].Court2Night ? "checked" : "") />
-
                             <input type="hidden" name="model[@i].Court2Night" value="false" />
+                            @if (!string.IsNullOrWhiteSpace(Model[i].Court2NightBy))
+                            {
+                                <div style="color: #0d6efd;" class="small"
+                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    ✓ <strong>@Model[i].Court2NightBy.Trim()</strong>
+                                </div>
+                            }
                         </td>
                         <td>
                             <input type="checkbox" name="model[@i].Court3Night" value="true" @(Model[i].Court3Night ? "checked" : "") />
                             <input type="hidden" name="model[@i].Court3Night" value="false" />
+                            @if (!string.IsNullOrWhiteSpace(Model[i].Court3NightBy))
+                            {
+                                <div style="color: #0d6efd;" class="small"
+                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    ✓ <strong>@Model[i].Court3NightBy.Trim()</strong>
+                                </div>
+                            }
                         </td>
-                    }
 
 
-                    <td>
-                        @{
-                            int totalChecks = ViewBag.CourtType == "Day" ? 4 : 3;
-                            int checkedCount = 0;
-                            if (ViewBag.CourtType == "Day")
-                            {
-                                if (Model[i].Court1Disposed) checkedCount++;
-                                if (Model[i].Court1Warrant) checkedCount++;
-                                if (Model[i].Court2Disposed) checkedCount++;
-                                if (Model[i].Court2Warrant) checkedCount++;
-                            }
-                            else
-                            {
-                                if (Model[i].Court1Night) checkedCount++;
-                                if (Model[i].Court2Night) checkedCount++;
-                                if (Model[i].Court3Night) checkedCount++;
-                            }
-                            var progress = (int)Math.Round((checkedCount / (double)totalChecks) * 100);
-                        }
-                        <div class="progress" style="height: 20px;">
-                            <div class="progress-bar bg-primary"
-                                 role="progressbar"
-                                 style="width: @progress%"
-                                 aria-valuenow="@progress"
-                                 aria-valuemin="0"
-                                 aria-valuemax="100">
-                                @progress%
-                            </div>
-                        </div>
-                    </td>
+             }
 
-                    <td class="status-text">
-                        @if (progress == 100)
-                        {
-                            <span class="text-success fw-bold">Completed</span>
-                        }
-                        else if (progress > 0)
-                        {
-                            <span class="text-warning fw-semibold">In Progress</span>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
+             <td>
+                 @{
+                     int totalChecks = ViewBag.CourtType == "Day" ? 4 : 3;
+                     int checkedCount = 0;
+                     if (ViewBag.CourtType == "Day")
+                     {
+                         if (Model[i].Court1Disposed) checkedCount++;
+                         if (Model[i].Court1Warrant) checkedCount++;
+                         if (Model[i].Court2Disposed) checkedCount++;
+                         if (Model[i].Court2Warrant) checkedCount++;
+                     }
+                     else
+                     {
+                         if (Model[i].Court1Night) checkedCount++;
+                         if (Model[i].Court2Night) checkedCount++;
+                         if (Model[i].Court3Night) checkedCount++;
+                     }
+                     var progress = (int)Math.Round((checkedCount / (double)totalChecks) * 100);
+                 }
+                 <div class="progress" style="height: 20px;">
+                     <div class="progress-bar bg-primary"
+                          role="progressbar"
+                          style="width: @progress%"
+                          aria-valuenow="@progress"
+                          aria-valuemin="0"
+                          aria-valuemax="100">
+                         @progress%
+                     </div>
+                 </div>
+             </td>
+
+             <td class="status-text">
+                 @if (progress == 100)
+                 {
+                     <span class="text-success fw-bold">Completed</span>
+                 }
+                 else if (progress > 0)
+                 {
+                     <span class="text-warning fw-semibold">In Progress</span>
+                 }
+             </td>
+         </tr>
+     }
+ </tbody>
+
+
+
+
     </table>
 
     <div class="d-flex justify-content-end mt-3">

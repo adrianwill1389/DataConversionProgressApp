@@ -34,8 +34,20 @@ namespace DataConversionProgressApp.Controllers
                 // ✅ Store username in session for use in Save method and UI
                 HttpContext.Session.SetString("Username", user.Username);
 
-                // Optional: could also store user ID or role if needed
-                // HttpContext.Session.SetInt32("UserId", user.Id);
+                // 🔔 Show banner only if user hasn't seen the latest announcement
+                var latest = _context.Announcements
+                    .OrderByDescending(a => a.Timestamp)
+                    .FirstOrDefault();
+
+                if (latest != null && (user.LastSeenAnnouncementTime == null || latest.Timestamp > user.LastSeenAnnouncementTime))
+                {
+                    TempData["NewAnnouncement"] = latest.Message;
+
+                    // Update user's last seen time
+                    user.LastSeenAnnouncementTime = DateTime.Now;
+                    _context.UserAccounts.Update(user);
+                    _context.SaveChanges();
+                }
 
                 return RedirectToAction("Index", "Home");
             }
@@ -43,6 +55,7 @@ namespace DataConversionProgressApp.Controllers
             ModelState.AddModelError(string.Empty, "Incorrect username or password. Please try again.");
             return View(model);
         }
+
 
 
         [HttpGet]

@@ -1,0 +1,66 @@
+﻿@model List<TickedItem>
+
+<!-- Activity Log Section -->
+<div class="section-box">
+    <h2 class="text-primary">
+        <i class="bi bi-journal-text"></i> Activity Log
+    </h2>
+    <hr class="my-4" />
+
+    @if (!Model.Any())
+    {
+        <p>No ticked items found yet. Start tracking your progress!</p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Task</th>
+                    <th>Date & Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("MMM dd, yyyy")</td>
+                        <td>@item.TaskName</td>
+                        <td>@item.Timestamp.ToString("MMM dd, yyyy h:mm tt")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<!-- Undo History Section -->
+@if (ViewBag.RemovedTicks != null && ((List<TickedItem>)ViewBag.RemovedTicks).Any())
+{
+    <div class="section-box">
+        <h4 class="mt-5 text-danger">
+            <i class="bi bi-x-circle"></i> Undo History
+        </h4>
+
+        <table class="table table-sm undo-history-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Task</th>
+                    <th>Date & Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (List<TickedItem>)ViewBag.RemovedTicks)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("MMM dd, yyyy")</td>
+                        <td>@item.TaskName</td>
+                        <td>@item.Timestamp.ToString("MMM dd, yyyy h:mm tt")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

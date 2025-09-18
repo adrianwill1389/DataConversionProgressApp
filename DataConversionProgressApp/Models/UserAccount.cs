@@ -12,6 +12,10 @@ namespace DataConversionProgressApp.Models
 
         [Required]
         public string Password { get; set; }
+
+        public DateTime? LastSeenAnnouncementTime { get; set; }
+
+
     }
 
 

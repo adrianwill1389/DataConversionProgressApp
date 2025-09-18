@@ -63,27 +63,110 @@ namespace DataConversionProgressApp.Controllers
                     _context.CourtProgressRecords.Add(existing);
                 }
 
-                
-                existing.Court1Disposed = item.Court1Disposed;
-                existing.Court1DisposedBy = item.Court1Disposed ? username : string.Empty;
+                // Court1 Disposed
+                if (item.Court1Disposed != existing.Court1Disposed)
+                {
+                    existing.Court1Disposed = item.Court1Disposed;
+                    existing.Court1DisposedBy = item.Court1Disposed ? username : string.Empty;
 
-                existing.Court1Warrant = item.Court1Warrant;
-                existing.Court1WarrantBy = item.Court1Warrant ? username : string.Empty;
+                    _context.TickedItems.Add(new TickedItem
+                    {
+                        Username = username,
+                        TaskName = item.Court1Disposed ? "Court1 Disposed" : "Court1 Disposed (Removed)",
+                        Date = dateReceived,
+                        Timestamp = DateTime.Now
+                    });
+                }
 
-                existing.Court2Disposed = item.Court2Disposed;
-                existing.Court2DisposedBy = item.Court2Disposed ? username : string.Empty;
+                // Court1 Warrant
+                if (item.Court1Warrant != existing.Court1Warrant)
+                {
+                    existing.Court1Warrant = item.Court1Warrant;
+                    existing.Court1WarrantBy = item.Court1Warrant ? username : string.Empty;
 
-                existing.Court2Warrant = item.Court2Warrant;
-                existing.Court2WarrantBy = item.Court2Warrant ? username : string.Empty;
+                    _context.TickedItems.Add(new TickedItem
+                    {
+                        Username = username,
+                        TaskName = item.Court1Warrant ? "Court1 Warrant" : "Court1 Warrant (Removed)",
+                        Date = dateReceived,
+                        Timestamp = DateTime.Now
+                    });
+                }
 
-                existing.Court1Night = item.Court1Night;
-                existing.Court1NightBy = item.Court1Night ? username : string.Empty;
+                // Court2 Disposed
+                if (item.Court2Disposed != existing.Court2Disposed)
+                {
+                    existing.Court2Disposed = item.Court2Disposed;
+                    existing.Court2DisposedBy = item.Court2Disposed ? username : string.Empty;
 
-                existing.Court2Night = item.Court2Night;
-                existing.Court2NightBy = item.Court2Night ? username : string.Empty;
+                    _context.TickedItems.Add(new TickedItem
+                    {
+                        Username = username,
+                        TaskName = item.Court2Disposed ? "Court2 Disposed" : "Court2 Disposed (Removed)",
+                        Date = dateReceived,
+                        Timestamp = DateTime.Now
+                    });
+                }
 
-                existing.Court3Night = item.Court3Night;
-                existing.Court3NightBy = item.Court3Night ? username : string.Empty;
+                // Court2 Warrant
+                if (item.Court2Warrant != existing.Court2Warrant)
+                {
+                    existing.Court2Warrant = item.Court2Warrant;
+                    existing.Court2WarrantBy = item.Court2Warrant ? username : string.Empty;
+
+                    _context.TickedItems.Add(new TickedItem
+                    {
+                        Username = username,
+                        TaskName = item.Court2Warrant ? "Court2 Warrant" : "Court2 Warrant (Removed)",
+                        Date = dateReceived,
+                        Timestamp = DateTime.Now
+                    });
+                }
+
+                // Court1 Night
+                if (item.Court1Night != existing.Court1Night)
+                {
+                    existing.Court1Night = item.Court1Night;
+                    existing.Court1NightBy = item.Court1Night ? username : string.Empty;
+
+                    _context.TickedItems.Add(new TickedItem
+                    {
+                        Username = username,
+                        TaskName = item.Court1Night ? "Court1 Night" : "Court1 Night (Removed)",
+                        Date = dateReceived,
+                        Timestamp = DateTime.Now
+                    });
+                }
+
+                // Court2 Night
+                if (item.Court2Night != existing.Court2Night)
+                {
+                    existing.Court2Night = item.Court2Night;
+                    existing.Court2NightBy = item.Court2Night ? username : string.Empty;
+
+                    _context.TickedItems.Add(new TickedItem
+                    {
+                        Username = username,
+                        TaskName = item.Court2Night ? "Court2 Night" : "Court2 Night (Removed)",
+                        Date = dateReceived,
+                        Timestamp = DateTime.Now
+                    });
+                }
+
+                // Court3 Night
+                if (item.Court3Night != existing.Court3Night)
+                {
+                    existing.Court3Night = item.Court3Night;
+                    existing.Court3NightBy = item.Court3Night ? username : string.Empty;
+
+                    _context.TickedItems.Add(new TickedItem
+                    {
+                        Username = username,
+                        TaskName = item.Court3Night ? "Court3 Night" : "Court3 Night (Removed)",
+                        Date = dateReceived,
+                        Timestamp = DateTime.Now
+                    });
+                }
 
                 existing.UpdatedBy = username;
                 existing.LastUpdated = DateTime.Now;
@@ -94,6 +177,7 @@ namespace DataConversionProgressApp.Controllers
             TempData["SaveMessage"] = "✔ Saved Successfully!";
             return RedirectToAction("Index", new { courtType, month, year });
         }
+
 
         // Return list of working days excluding weekends and holidays
         private List<DateTime> GetWorkingDays(DateTime start, DateTime end)

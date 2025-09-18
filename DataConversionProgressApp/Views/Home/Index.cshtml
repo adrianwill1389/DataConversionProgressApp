@@ -13,9 +13,12 @@
                 <div class="card bg-light shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">@months[i]</h5>
-                        <a href="/Court/Index?month=@(i + 1)" class="btn btn-outline-primary btn-sm">
-                            View Progress
-                        </a>
+                       <a href="/Court/Index?month=@(i + 1)" class="btn btn-outline-primary btn-sm"
+   title="See all tasks for @months[i]">
+   <i class="bi bi-eye"></i> View Progress
+</a>
+
+
                     </div>
                 </div>
             </div>
