@@ -22,14 +22,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model
+               .GroupBy(i => new { i.Date, Task = (i.TaskName ?? "").Replace(" (Removed)", "") })
+               .Select(g => g.OrderByDescending(i => i.Timestamp).First())
+               .Where(i => !((i.TaskName ?? "").Contains("(Removed)")))
+               )
                 {
                     <tr>
                         <td>@item.Date.ToString("MMM dd, yyyy")</td>
-                        <td>@item.TaskName</td>
+                        <td title="Ticked by @item.Username">@item.TaskName</td>
                         <td>@item.Timestamp.ToString("MMM dd, yyyy h:mm tt")</td>
                     </tr>
                 }
+
             </tbody>
         </table>
     }
@@ -57,7 +62,7 @@
                 {
                     <tr>
                         <td>@item.Date.ToString("MMM dd, yyyy")</td>
-                        <td>@item.TaskName</td>
+                        <td title="Removed by @item.Username">@item.TaskName</td>
                         <td>@item.Timestamp.ToString("MMM dd, yyyy h:mm tt")</td>
                     </tr>
                 }

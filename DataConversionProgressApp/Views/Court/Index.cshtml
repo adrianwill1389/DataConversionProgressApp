@@ -178,10 +178,11 @@
                             {
                                 <div style="color: #0d6efd;" class="small"
                                      title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@Model[i].Court1NightBy.Trim()</strong>
+                                    ✓ <strong>@(Model[i].Court1NightBy?.Trim() ?? "")</strong>
                                 </div>
                             }
                         </td>
+
                         <td>
                             <input type="checkbox" name="model[@i].Court2Night" value="true" @(Model[i].Court2Night ? "checked" : "") />
                             <input type="hidden" name="model[@i].Court2Night" value="false" />
@@ -189,10 +190,11 @@
                             {
                                 <div style="color: #0d6efd;" class="small"
                                      title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@Model[i].Court2NightBy.Trim()</strong>
+                                    ✓ <strong>@(Model[i].Court2NightBy?.Trim() ?? "")</strong>
                                 </div>
                             }
                         </td>
+
                         <td>
                             <input type="checkbox" name="model[@i].Court3Night" value="true" @(Model[i].Court3Night ? "checked" : "") />
                             <input type="hidden" name="model[@i].Court3Night" value="false" />
@@ -200,10 +202,11 @@
                             {
                                 <div style="color: #0d6efd;" class="small"
                                      title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@Model[i].Court3NightBy.Trim()</strong>
+                                    ✓ <strong>@(Model[i].Court3NightBy?.Trim() ?? "")</strong>
                                 </div>
                             }
                         </td>
+
 
 
              }
