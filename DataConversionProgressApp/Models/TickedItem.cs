@@ -9,8 +9,9 @@ namespace DataConversionProgressApp.Models
     public class TickedItem
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string TaskName { get; set; }
+        public string? Username { get; set; }
+        public string? TaskName { get; set; }
+
         public DateTime Date { get; set; }
         public DateTime Timestamp { get; set; }
 
