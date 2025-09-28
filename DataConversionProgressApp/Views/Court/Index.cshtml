@@ -122,89 +122,155 @@
 
              @if (ViewBag.CourtType == "Day")
              {
-                        <td>
-                            <input type="checkbox" name="model[@i].Court1Disposed" value="true" @(Model[i].Court1Disposed ? "checked" : "") />
-                            <input type="hidden" name="model[@i].Court1Disposed" value="false" />
-                            @if (!string.IsNullOrWhiteSpace(Model[i].Court1DisposedBy))
-                            {
-                                <div style="color: #0d6efd;" class="small"
-                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@Model[i].Court1DisposedBy.Trim()</strong>
-                                </div>
-                            }
+                        <td class="text-center align-middle">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <input type="checkbox" name="model[@i].Court1Disposed" value="true" @(Model[i].Court1Disposed ? "checked" : "") />
+                                <input type="hidden" name="model[@i].Court1Disposed" value="false" />
+                                @if (!string.IsNullOrWhiteSpace(Model[i].Court1DisposedBy))
+                                {
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
+                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                                            <circle cx="9" cy="9" r="9" fill="#0d6efd" />
+                                            <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
+                                                  font-size="11" font-family="Arial">
+                                                @(Model[i].Court1DisposedBy.Substring(0, 1).ToUpper())
+                                            </text>
+                                        </svg>
+                                        <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court1DisposedBy.Trim()</strong>
+                                    </div>
+                                }
+                            </div>
                         </td>
-                        <td>
-                            <input type="checkbox" name="model[@i].Court1Warrant" value="true" @(Model[i].Court1Warrant ? "checked" : "") />
-                            <input type="hidden" name="model[@i].Court1Warrant" value="false" />
-                            @if (!string.IsNullOrWhiteSpace(Model[i].Court1WarrantBy))
-                            {
-                                <div style="color: #0d6efd;" class="small"
-                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@Model[i].Court1WarrantBy.Trim()</strong>
-                                </div>
-                            }
+
+                        <td class="text-center align-middle">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <input type="checkbox" name="model[@i].Court1Warrant" value="true" @(Model[i].Court1Warrant ? "checked" : "") />
+                                <input type="hidden" name="model[@i].Court1Warrant" value="false" />
+                                @if (!string.IsNullOrWhiteSpace(Model[i].Court1WarrantBy))
+                                {
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
+                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                                            <circle cx="9" cy="9" r="9" fill="#0d6efd" />
+                                            <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
+                                                  font-size="11" font-family="Arial">
+                                                @(Model[i].Court1WarrantBy.Substring(0, 1).ToUpper())
+                                            </text>
+                                        </svg>
+                                        <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court1WarrantBy.Trim()</strong>
+                                    </div>
+                                }
+                            </div>
                         </td>
-                        <td>
-                            <input type="checkbox" name="model[@i].Court2Disposed" value="true" @(Model[i].Court2Disposed ? "checked" : "") />
-                            <input type="hidden" name="model[@i].Court2Disposed" value="false" />
-                            @if (!string.IsNullOrWhiteSpace(Model[i].Court2DisposedBy))
-                            {
-                                <div style="color: #0d6efd;" class="small"
-                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@Model[i].Court2DisposedBy.Trim()</strong>
-                                </div>
-                            }
+
+                        <td class="text-center align-middle">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <input type="checkbox" name="model[@i].Court2Disposed" value="true" @(Model[i].Court2Disposed ? "checked" : "") />
+                                <input type="hidden" name="model[@i].Court2Disposed" value="false" />
+                                @if (!string.IsNullOrWhiteSpace(Model[i].Court2DisposedBy))
+                                {
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
+                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                                            <circle cx="9" cy="9" r="9" fill="#0d6efd" />
+                                            <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
+                                                  font-size="11" font-family="Arial">
+                                                @(Model[i].Court2DisposedBy.Substring(0, 1).ToUpper())
+                                            </text>
+                                        </svg>
+                                        <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court2DisposedBy.Trim()</strong>
+                                    </div>
+                                }
+                            </div>
                         </td>
-                        <td>
-                            <input type="checkbox" name="model[@i].Court2Warrant" value="true" @(Model[i].Court2Warrant ? "checked" : "") />
-                            <input type="hidden" name="model[@i].Court2Warrant" value="false" />
-                            @if (!string.IsNullOrWhiteSpace(Model[i].Court2WarrantBy))
-                            {
-                                <div style="color: #0d6efd;" class="small"
-                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@Model[i].Court2WarrantBy.Trim()</strong>
-                                </div>
-                            }
+
+                        <td class="text-center align-middle">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <input type="checkbox" name="model[@i].Court2Warrant" value="true" @(Model[i].Court2Warrant ? "checked" : "") />
+                                <input type="hidden" name="model[@i].Court2Warrant" value="false" />
+                                @if (!string.IsNullOrWhiteSpace(Model[i].Court2WarrantBy))
+                                {
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
+                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                                            <circle cx="9" cy="9" r="9" fill="#0d6efd" />
+                                            <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
+                                                  font-size="11" font-family="Arial">
+                                                @(Model[i].Court2WarrantBy.Substring(0, 1).ToUpper())
+                                            </text>
+                                        </svg>
+                                        <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court2WarrantBy.Trim()</strong>
+                                    </div>
+                                }
+                            </div>
                         </td>
 
 
              }
              else if (ViewBag.CourtType == "Night")
              {
-                        <td>
-                            <input type="checkbox" name="model[@i].Court1Night" value="true" @(Model[i].Court1Night ? "checked" : "") />
-                            <input type="hidden" name="model[@i].Court1Night" value="false" />
-                            @if (!string.IsNullOrWhiteSpace(Model[i].Court1NightBy))
-                            {
-                                <div style="color: #0d6efd;" class="small"
-                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@(Model[i].Court1NightBy?.Trim() ?? "")</strong>
-                                </div>
-                            }
+                        <td class="text-center align-middle">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <input type="checkbox" name="model[@i].Court1Night" value="true" @(Model[i].Court1Night ? "checked" : "") />
+                                <input type="hidden" name="model[@i].Court1Night" value="false" />
+                                @if (!string.IsNullOrWhiteSpace(Model[i].Court1NightBy))
+                                {
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
+                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                                            <circle cx="9" cy="9" r="9" fill="#0d6efd" />
+                                            <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
+                                                  font-size="11" font-family="Arial">
+                                                @(Model[i].Court1NightBy.Substring(0, 1).ToUpper())
+                                            </text>
+                                        </svg>
+                                        <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court1NightBy.Trim()</strong>
+                                    </div>
+                                }
+                            </div>
                         </td>
 
-                        <td>
-                            <input type="checkbox" name="model[@i].Court2Night" value="true" @(Model[i].Court2Night ? "checked" : "") />
-                            <input type="hidden" name="model[@i].Court2Night" value="false" />
-                            @if (!string.IsNullOrWhiteSpace(Model[i].Court2NightBy))
-                            {
-                                <div style="color: #0d6efd;" class="small"
-                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@(Model[i].Court2NightBy?.Trim() ?? "")</strong>
-                                </div>
-                            }
+                        <td class="text-center align-middle">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <input type="checkbox" name="model[@i].Court2Night" value="true" @(Model[i].Court2Night ? "checked" : "") />
+                                <input type="hidden" name="model[@i].Court2Night" value="false" />
+                                @if (!string.IsNullOrWhiteSpace(Model[i].Court2NightBy))
+                                {
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
+                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                                            <circle cx="9" cy="9" r="9" fill="#0d6efd" />
+                                            <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
+                                                  font-size="11" font-family="Arial">
+                                                @(Model[i].Court2NightBy.Substring(0, 1).ToUpper())
+                                            </text>
+                                        </svg>
+                                        <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court2NightBy.Trim()</strong>
+                                    </div>
+                                }
+                            </div>
                         </td>
 
-                        <td>
-                            <input type="checkbox" name="model[@i].Court3Night" value="true" @(Model[i].Court3Night ? "checked" : "") />
-                            <input type="hidden" name="model[@i].Court3Night" value="false" />
-                            @if (!string.IsNullOrWhiteSpace(Model[i].Court3NightBy))
-                            {
-                                <div style="color: #0d6efd;" class="small"
-                                     title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
-                                    ✓ <strong>@(Model[i].Court3NightBy?.Trim() ?? "")</strong>
-                                </div>
-                            }
+                        <td class="text-center align-middle">
+                            <div class="d-flex flex-column align-items-center gap-1">
+                                <input type="checkbox" name="model[@i].Court3Night" value="true" @(Model[i].Court3Night ? "checked" : "") />
+                                <input type="hidden" name="model[@i].Court3Night" value="false" />
+                                @if (!string.IsNullOrWhiteSpace(Model[i].Court3NightBy))
+                                {
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
+                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                                            <circle cx="9" cy="9" r="9" fill="#0d6efd" />
+                                            <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
+                                                  font-size="11" font-family="Arial">
+                                                @(Model[i].Court3NightBy.Substring(0, 1).ToUpper())
+                                            </text>
+                                        </svg>
+                                        <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court3NightBy.Trim()</strong>
+                                    </div>
+                                }
+                            </div>
                         </td>
 
 
@@ -245,7 +311,8 @@
              <td class="status-text">
                  @if (progress == 100)
                  {
-                     <span class="text-success fw-bold">Completed</span>
+                            <span class="status-completed"> Completed</span>
+
                  }
                  else if (progress > 0)
                  {

@@ -226,6 +226,60 @@ h2, h4 {
         border-radius: 4px;
     }
 
+svg:hover circle {
+    filter: drop-shadow(0 0 4px #0d6efd);
+    transition: filter 0.3s ease;
+}
+
+.has-username strong {
+    animation: glowIn 0.6s ease;
+}
+
+@keyframes glowIn {
+    0%   { background-color: #cce5ff; opacity: 0; }
+    50%  { background-color: #e0f0ff; opacity: 1; }
+    100% { background-color: transparent; }
+}
+
+
+.status-completed {
+    background-color: #d4edda;
+    color: #20a162; /* Slightly brighter green */
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    display: inline-block;
+    box-shadow: 0 0 6px rgba(32, 161, 98, 0.4);
+    position: relative;
+    top: -2px;
+    animation: popIn 0.8s ease 0.2s;
+    transition: background-color 0.3s ease, opacity 0.6s ease;
+}
+
+    .status-completed:hover {
+        background-color: #c3e6cb;
+    }
+
+  
+
+/* Pop-in animation */
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 
 
 
