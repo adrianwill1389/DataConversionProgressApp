@@ -58,7 +58,23 @@ namespace DataConversionProgressApp.Controllers
                     existing = new CourtProgressRecord
                     {
                         DateReceived = dateReceived,
-                        CourtType = courtType
+                        CourtType = courtType,
+                        Court1Disposed = false,
+                        Court1DisposedBy = "",
+                        Court1Warrant = false,
+                        Court1WarrantBy = "",
+                        Court2Disposed = false,
+                        Court2DisposedBy = "",
+                        Court2Warrant = false,
+                        Court2WarrantBy = "",
+                        Court1Night = false,
+                        Court1NightBy = "",
+                        Court2Night = false,
+                        Court2NightBy = "",
+                        Court3Night = false,
+                        Court3NightBy = "",
+                        UpdatedBy = username,
+                        LastUpdated = DateTime.Now
                     };
                     _context.CourtProgressRecords.Add(existing);
                 }
@@ -98,7 +114,6 @@ namespace DataConversionProgressApp.Controllers
                 {
                     existing.Court2Disposed = item.Court2Disposed;
                     existing.Court2DisposedBy = item.Court2Disposed ? username : string.Empty;
-                
 
                     _context.TickedItems.Add(new TickedItem
                     {
