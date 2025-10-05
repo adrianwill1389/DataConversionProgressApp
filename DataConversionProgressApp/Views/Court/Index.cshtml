@@ -331,7 +331,10 @@
     <div class="d-flex justify-content-end mt-3">
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
-    <div class="d-flex justify-content-end mt-3">
-        <button type="button" class="btn btn-secondary" onclick="location.reload();">Cancel</button>
-    </div>
+   
 </form>
+<div class="d-flex justify-content-end mt-3">
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary" style="pointer-events: auto; z-index: 9999;">
+        Cancel
+    </a>
+</div>

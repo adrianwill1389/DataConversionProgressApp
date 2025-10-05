@@ -65,6 +65,21 @@ public class AnnouncementController : Controller
 
         return View("AnnouncementDetails", latest); // Or whatever view shows the full message
     }
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        var username = HttpContext.Session.GetString("Username");
+        var announcement = _context.Announcements.FirstOrDefault(a => a.Id == id && a.Username == username);
+
+        if (announcement != null)
+        {
+            _context.Announcements.Remove(announcement);
+            _context.SaveChanges();
+        }
+
+        return RedirectToAction("Index");
+    }
+
 
 
 }
