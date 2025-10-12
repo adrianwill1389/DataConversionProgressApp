@@ -292,9 +292,71 @@ svg:hover circle {
     }
 }
 
+.image-wrapper {
+    background-color: #f5faff; /* Soft blue tint */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    display: inline-block;
+}
 
+.portrait-photo {
+    max-width: 280px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
 
+.caption {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 8px;
+    text-align: center;
+}
+.team-highlight {
+    background-color: #f5faff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    text-align: center;
+}
 
+.team-photo-section {
+    background-color: #f0f8ff; /* Soft blue */
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 32px; /* Separates from month grid */
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    text-align: center;
+    position: relative;
+}
+
+.ribbon-tag {
+    position: absolute;
+    top: 12px;
+    left: 465px;
+    background-color: #007bff; /* Bold blue */
+    color: white;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+.portrait-photo {
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.caption {
+    font-size: 0.9rem;
+    color: #555;
+}
 
 
 
