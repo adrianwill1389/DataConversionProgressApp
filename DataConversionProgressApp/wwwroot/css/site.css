@@ -322,21 +322,28 @@ svg:hover circle {
     text-align: center;
 }
 
-.team-photo-section {
-    background-color: #f0f8ff; /* Soft blue */
+.map-section {
+    background-color: #e6f7f9; /* Soft teal */
     padding: 24px;
     border-radius: 12px;
-    margin-bottom: 32px; /* Separates from month grid */
+    margin-bottom: 32px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
     text-align: center;
     position: relative;
 }
 
+.map-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
 .ribbon-tag {
     position: absolute;
     top: 12px;
-    left: 465px;
-    background-color: #007bff; /* Bold blue */
+    left: 12px;
+    background-color: #007bff;
     color: white;
     padding: 6px 14px;
     font-size: 0.85rem;
@@ -346,16 +353,19 @@ svg:hover circle {
     z-index: 2;
 }
 
-.portrait-photo {
-    max-width: 50%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 12px;
-}
-
 .caption {
     font-size: 0.9rem;
     color: #555;
+}
+.map-image {
+    opacity: 0;
+    animation: fadeIn 1.2s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
 
 
