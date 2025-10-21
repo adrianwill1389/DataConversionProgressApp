@@ -353,6 +353,27 @@ svg:hover circle {
     z-index: 2;
 }
 
+.awareness-banner {
+    background-color: #fce4ec; /* soft pink */
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.awareness-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.awareness-caption {
+    font-size: 0.95rem;
+    color: #c2185b;
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+
 .caption {
     font-size: 0.9rem;
     color: #555;

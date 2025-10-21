@@ -206,7 +206,7 @@ namespace DataConversionProgressApp.Controllers
                 new DateTime(start.Year, 5, 23),  
                 new DateTime(start.Year, 8, 1),   
                 new DateTime(start.Year, 8, 6),   
-                new DateTime(start.Year, 10, 21),
+                new DateTime(start.Year, 10, 20),
                 new DateTime(start.Year, 12, 25), 
                 new DateTime(start.Year, 12, 26),
             };
