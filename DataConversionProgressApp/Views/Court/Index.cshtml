@@ -123,13 +123,28 @@
              @if (ViewBag.CourtType == "Day")
              {
                         <td class="text-center align-middle">
+                            @{
+                                var noCourtDays = new List<DateTime>
+                    {
+                    new DateTime(2025, 09, 19),
+                    new DateTime(2025, 10, 23),
+                    new DateTime(2025, 10, 24),
+                    new DateTime(2025, 10, 27),
+                    new DateTime(2025, 10, 28),
+                    new DateTime(2025, 10, 29),
+                    new DateTime(2025, 10, 30),
+                    new DateTime(2025, 10, 31),
+                    // Add more dates here
+                    };
+                            }
                             <div class="d-flex flex-column align-items-center gap-1">
-                                <input type="checkbox" name="model[@i].Court1Disposed" value="true" @(Model[i].Court1Disposed ? "checked" : "") />
+                                <input type="checkbox" name="model[@i].Court1Disposed" value="true" @(Model[i].Court1Disposed ? "checked" : "")
+								@(noCourtDays.Contains(Model[i].DateReceived.Date) ? "disabled" : "") />
                                 <input type="hidden" name="model[@i].Court1Disposed" value="false" />
                                 @if (!string.IsNullOrWhiteSpace(Model[i].Court1DisposedBy))
                                 {
-                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
-                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;">
+                                        <!--Tool tip code was removed from here and below for each court-->
                                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
                                             <circle cx="9" cy="9" r="9" fill="#0d6efd" />
                                             <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
@@ -140,17 +155,26 @@
                                         <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court1DisposedBy.Trim()</strong>
                                     </div>
                                 }
+                       
+
+                                @if (noCourtDays.Contains(Model[i].DateReceived.Date))
+                                {
+                                    <span class="badge bg-danger text-light" style="margin-top:4px;" title="Hurricane Melissia">No Court</span>
+
+                                }
+
                             </div>
                         </td>
 
                         <td class="text-center align-middle">
                             <div class="d-flex flex-column align-items-center gap-1">
-                                <input type="checkbox" name="model[@i].Court1Warrant" value="true" @(Model[i].Court1Warrant ? "checked" : "") />
+                                <input type="checkbox" name="model[@i].Court1Warrant" value="true" @(Model[i].Court1Warrant ? "checked" : "")
+                                @(noCourtDays.Contains(Model[i].DateReceived.Date) ? "disabled" : "")/>
                                 <input type="hidden" name="model[@i].Court1Warrant" value="false" />
                                 @if (!string.IsNullOrWhiteSpace(Model[i].Court1WarrantBy))
                                 {
-                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
-                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;">
+                                         
                                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
                                             <circle cx="9" cy="9" r="9" fill="#0d6efd" />
                                             <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
@@ -161,17 +185,24 @@
                                         <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court1WarrantBy.Trim()</strong>
                                     </div>
                                 }
+                                @if (noCourtDays.Contains(Model[i].DateReceived.Date))
+                                {
+                                    <span class="badge bg-danger text-light" style="margin-top:4px;" title="Hurricane Melissia">No Court</span>
+                                }
+
                             </div>
                         </td>
 
                         <td class="text-center align-middle">
                             <div class="d-flex flex-column align-items-center gap-1">
-                                <input type="checkbox" name="model[@i].Court2Disposed" value="true" @(Model[i].Court2Disposed ? "checked" : "") />
+                                <input type="checkbox" name="model[@i].Court2Disposed" value="true" @(Model[i].Court2Disposed ? "checked" : "")
+                                @(noCourtDays.Contains(Model[i].DateReceived.Date) ? "disabled" : "") 
+/>
                                 <input type="hidden" name="model[@i].Court2Disposed" value="false" />
                                 @if (!string.IsNullOrWhiteSpace(Model[i].Court2DisposedBy))
                                 {
-                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
-                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;">
+                                        
                                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
                                             <circle cx="9" cy="9" r="9" fill="#0d6efd" />
                                             <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
@@ -182,17 +213,23 @@
                                         <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court2DisposedBy.Trim()</strong>
                                     </div>
                                 }
+                                @if (noCourtDays.Contains(Model[i].DateReceived.Date))
+                                {
+                                    <span class="badge bg-danger text-light" style="margin-top:4px;" title="Hurricane Melissia">No Court</span>
+                                }
+
                             </div>
                         </td>
 
                         <td class="text-center align-middle">
                             <div class="d-flex flex-column align-items-center gap-1">
-                                <input type="checkbox" name="model[@i].Court2Warrant" value="true" @(Model[i].Court2Warrant ? "checked" : "") />
+                                <input type="checkbox" name="model[@i].Court2Warrant" value="true" @(Model[i].Court2Warrant ? "checked" : "")
+                                @(noCourtDays.Contains(Model[i].DateReceived.Date) ? "disabled" : "") />
                                 <input type="hidden" name="model[@i].Court2Warrant" value="false" />
                                 @if (!string.IsNullOrWhiteSpace(Model[i].Court2WarrantBy))
                                 {
-                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
-                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;">
+                                         
                                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
                                             <circle cx="9" cy="9" r="9" fill="#0d6efd" />
                                             <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
@@ -203,6 +240,11 @@
                                         <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court2WarrantBy.Trim()</strong>
                                     </div>
                                 }
+                                @if (noCourtDays.Contains(Model[i].DateReceived.Date))
+                                {
+                                    <span class="badge bg-danger text-light" style="margin-top:4px;" title="Hurricane Melissia">No Court</span>
+                                }
+
                             </div>
                         </td>
 
@@ -211,13 +253,28 @@
              else if (ViewBag.CourtType == "Night")
              {
                         <td class="text-center align-middle">
+                            @{
+                                var noCourtDays = new List<DateTime>
+                    {
+                    new DateTime(2025, 10, 23),
+                    new DateTime(2025, 10, 24),
+                    new DateTime(2025, 10, 27),
+                    new DateTime(2025, 10, 28),
+                    new DateTime(2025, 10, 29),
+                    new DateTime(2025, 10, 30),
+                    new DateTime(2025, 10, 31),
+                    // Add more dates here
+                    };
+                            }
+
                             <div class="d-flex flex-column align-items-center gap-1">
-                                <input type="checkbox" name="model[@i].Court1Night" value="true" @(Model[i].Court1Night ? "checked" : "") />
+                                <input type="checkbox" name="model[@i].Court1Night" value="true" @(Model[i].Court1Night ? "checked" : "")
+                                @(noCourtDays.Contains(Model[i].DateReceived.Date) ? "disabled" : "")/>
                                 <input type="hidden" name="model[@i].Court1Night" value="false" />
                                 @if (!string.IsNullOrWhiteSpace(Model[i].Court1NightBy))
                                 {
-                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
-                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;">
+                                         
                                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
                                             <circle cx="9" cy="9" r="9" fill="#0d6efd" />
                                             <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
@@ -228,17 +285,24 @@
                                         <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court1NightBy.Trim()</strong>
                                     </div>
                                 }
+                            
+                                @if (noCourtDays.Contains(Model[i].DateReceived.Date))
+                                {
+                                    <span class="badge bg-danger text-light" style="margin-top:4px;" title="Hurricane Melissia">No Court</span>
+                                }
+
                             </div>
                         </td>
 
                         <td class="text-center align-middle">
                             <div class="d-flex flex-column align-items-center gap-1">
-                                <input type="checkbox" name="model[@i].Court2Night" value="true" @(Model[i].Court2Night ? "checked" : "") />
+                                <input type="checkbox" name="model[@i].Court2Night" value="true" @(Model[i].Court2Night ? "checked" : "")
+								@(noCourtDays.Contains(Model[i].DateReceived.Date) ? "disabled" : "") />
                                 <input type="hidden" name="model[@i].Court2Night" value="false" />
                                 @if (!string.IsNullOrWhiteSpace(Model[i].Court2NightBy))
                                 {
-                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
-                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;">
+                                         
                                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
                                             <circle cx="9" cy="9" r="9" fill="#0d6efd" />
                                             <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
@@ -249,17 +313,23 @@
                                         <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court2NightBy.Trim()</strong>
                                     </div>
                                 }
+                                @if (noCourtDays.Contains(Model[i].DateReceived.Date))
+                                {
+                                    <span class="badge bg-danger text-light" style="margin-top:4px;" title="Hurricane Melissia">No Court</span>
+                                }
+
                             </div>
                         </td>
 
                         <td class="text-center align-middle">
                             <div class="d-flex flex-column align-items-center gap-1">
-                                <input type="checkbox" name="model[@i].Court3Night" value="true" @(Model[i].Court3Night ? "checked" : "") />
+                                <input type="checkbox" name="model[@i].Court3Night" value="true" @(Model[i].Court3Night ? "checked" : "")
+								@(noCourtDays.Contains(Model[i].DateReceived.Date) ? "disabled" : "") />
                                 <input type="hidden" name="model[@i].Court3Night" value="false" />
                                 @if (!string.IsNullOrWhiteSpace(Model[i].Court3NightBy))
                                 {
-                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;"
-                                         title="Last updated by @Model[i].UpdatedBy on @Model[i].LastUpdated.ToString("MMM d, yyyy h:mm tt")">
+                                    <div class="d-flex align-items-center justify-content-center" style="line-height:1;">
+                                         
                                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
                                             <circle cx="9" cy="9" r="9" fill="#0d6efd" />
                                             <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ffffff"
@@ -270,6 +340,11 @@
                                         <strong style="color:#0d6efd; margin-left:6px; font-size:13px;">@Model[i].Court3NightBy.Trim()</strong>
                                     </div>
                                 }
+                                @if (noCourtDays.Contains(Model[i].DateReceived.Date))
+                                {
+                                    <span class="badge bg-danger text-light" style="margin-top:4px;" title="Hurricane Melissia">No Court</span>
+                                }
+
                             </div>
                         </td>
 

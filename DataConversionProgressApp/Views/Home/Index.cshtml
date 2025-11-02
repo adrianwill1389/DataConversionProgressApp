@@ -4,7 +4,10 @@
 }
 
 <div class="text-center">
-    <h2 class="text-primary mb-4">Data Conversion Progress</h2>
+    
+    <div class="progress-pulse-banner text-center mb-4">
+        <p>📊 Tracking data conversion progress — stay focused!</p>
+    </div>
 
     <div class="row justify-content-center">
         @for (int i = 0; i < months.Count; i++)
@@ -24,10 +27,13 @@
             </div>
         }
     </div>
-    <!-- 🎉 Add your portrait photo here -->
-    <div class="awareness-banner text-center mb-3">
-        <img src="~/images/october-ribbon.jpg" alt="Breast Cancer Awareness" class="map-image" />
-        <p class="awareness-caption">Honoring strength with subtle beauty</p>
+    <!-- 📊 Dashboard Section with Blue Background -->
+    <!-- Blue Dashboard Section -->
+    <div class="dashboard-section">
+        <div class="text-center">
+            <img src="~/images/dashboard.jpg" alt="Months Tracking Dashboard" class="dashboard-image" />
+            <p class="dashboard-caption">Visualizing progress and movement. 🇯🇲</p>
+        </div>
     </div>
 
 </div>
